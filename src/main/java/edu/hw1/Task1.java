@@ -1,12 +1,15 @@
 package edu.hw1;
 
-import java.util.Scanner;
 import java.util.Objects;
+import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@SuppressWarnings("uncommentedmain")
+
 public final class Task1 {
 
+    final static int SIXTY = 60;
     private final static Logger LOGGER = LogManager.getLogger();
 
     private Task1() {
@@ -15,8 +18,8 @@ public final class Task1 {
     public static boolean check(String str) {
         Objects.requireNonNull(str);
         boolean res = true;
-        if (!str.contains(":") || str.indexOf(':') == 0 || str.indexOf(':') == str.length() - 1 ||
-            !(str.indexOf(':') == str.lastIndexOf(':'))) {
+        if (!str.contains(":") || str.indexOf(':') == 0 || str.indexOf(':') == str.length() - 1
+            || !(str.indexOf(':') == str.lastIndexOf(':'))) {
             res = false;
         } else {
             for (int i = 0; i < str.length() && res; i++) {
@@ -26,7 +29,7 @@ public final class Task1 {
             }
             if (res) {
                 String[] sarr = str.split(":");
-                if (Integer.parseInt(sarr[0]) < 0 || Integer.parseInt(sarr[1]) < 0 || Integer.parseInt(sarr[1]) >= 60) {
+                if (Integer.parseInt(sarr[0]) < 0 || Integer.parseInt(sarr[1]) < 0 || Integer.parseInt(sarr[1]) >= SIXTY) {
                     res = false;
                 }
             }
@@ -41,7 +44,7 @@ public final class Task1 {
             res = -1;
         } else {
             String[] sarr = str.split(":");
-            res = Integer.parseInt(sarr[0]) * 60 + Integer.parseInt(sarr[1]);
+            res = Integer.parseInt(sarr[0]) * SIXTY + Integer.parseInt(sarr[1]);
         }
 
         return res;
