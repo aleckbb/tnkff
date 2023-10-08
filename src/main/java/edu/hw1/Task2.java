@@ -14,12 +14,13 @@ public class Task2 {
     private Task2() {
     }
 
-    public static int countDigits(int digits){
+    public static int countDigits(int digits) {
         int res = 0;
         digits = Math.abs(digits);
-        if(digits == 0)
+        if (digits == 0) {
             res = 1;
-        while(digits > 0) {
+        }
+        while (digits > 0) {
             digits /= TEN;
             res++;
         }
