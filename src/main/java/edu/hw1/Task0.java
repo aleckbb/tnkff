@@ -8,6 +8,7 @@ public final class Task0 {
 
     private Task0() {
     }
+
     public static void task0(String[] args) {
         LOGGER.info("Привет, мир!");
     }
