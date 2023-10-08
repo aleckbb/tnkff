@@ -16,12 +16,12 @@ public class Task2 {
 
     public static int countDigits(int digits) {
         int res = 0;
-        digits = Math.abs(digits);
-        if (digits == 0) {
+        int absDigits = Math.abs(digits);
+        if (absDigits == 0) {
             res = 1;
         }
-        while (digits > 0) {
-            digits /= TEN;
+        while (absDigits > 0) {
+            absDigits /= TEN;
             res++;
         }
         return res;
