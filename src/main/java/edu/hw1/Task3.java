@@ -1,6 +1,5 @@
 package edu.hw1;
 
-import java.util.Objects;
 import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,7 +13,6 @@ public class Task3 {
     }
 
     public static int maxArray(int[] a) {
-        Objects.requireNonNull(a);
         int max = a[0];
         for (int j = 1; j < a.length; j++) {
             if (a[j] > max) {
@@ -25,7 +23,6 @@ public class Task3 {
     }
 
     public static int minArray(int[] a) {
-        Objects.requireNonNull(a);
         int min = a[0];
         for (int j = 1; j < a.length; j++) {
             if (a[j] < min) {
@@ -36,7 +33,7 @@ public class Task3 {
     }
 
     public static boolean isNestable(int[] a1, int[] a2) {
-        return (minArray(a1) > minArray(a2) && maxArray(a1) < maxArray(a2));
+        return (a1.length * a2.length > 0) ? (minArray(a1) > minArray(a2) && maxArray(a1) < maxArray(a2)) : false;
     }
 
     public static void main(String[] args) {

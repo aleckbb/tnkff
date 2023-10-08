@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class Task3Test {
 
     @Test
-    @DisplayName("Вложенность массивав другой массив")
+    @DisplayName("Вложенность массивов в другой массив")
     void isNestable() {
         int[] a1 = {0, 0, 0}, a2 = {0, 0};
         boolean actual = Task3.isNestable(a1, a2);
@@ -37,6 +37,12 @@ class Task3Test {
         a2 = new int[] {0, 6};
         actual = Task3.isNestable(a1, a2);
         expected = true;
+        assertEquals(expected, actual);
+
+        a1 = new int[] {};
+        a2 = new int[] {0, 6};
+        actual = Task3.isNestable(a1, a2);
+        expected = false;
         assertEquals(expected, actual);
     }
 }
