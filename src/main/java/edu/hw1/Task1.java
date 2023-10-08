@@ -1,17 +1,17 @@
 package edu.hw1;
 
+import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@SuppressWarnings("uncommentedmain")
+public final class Task1 {
 
-public final class Task0 {
     private final static Logger LOGGER = LogManager.getLogger();
 
-    private Task0() {
+    private Task1() {
     }
 
     public static void main(String[] args) {
-        LOGGER.info("Привет, мир!");
+
     }
 }
