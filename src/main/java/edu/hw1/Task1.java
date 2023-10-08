@@ -39,7 +39,6 @@ public final class Task1 {
     }
 
     public static int minutesToSeconds(String str) {
-
         int res;
         if (!check(str)) {
             res = -1;
