@@ -29,7 +29,8 @@ public final class Task1 {
             }
             if (res) {
                 String[] sarr = str.split(":");
-                if (Integer.parseInt(sarr[0]) < 0 || Integer.parseInt(sarr[1]) < 0 || Integer.parseInt(sarr[1]) >= SIXTY) {
+                if (Integer.parseInt(sarr[0]) < 0 || Integer.parseInt(sarr[1]) < 0
+                    || Integer.parseInt(sarr[1]) >= SIXTY) {
                     res = false;
                 }
             }
