@@ -10,6 +10,12 @@ import org.apache.logging.log4j.Logger;
 
 public class Task6 {
 
+    final static int FOUR = 4;
+    final static int TEN = 10;
+    final static int THOUSAND = 1000;
+
+    final static int CONSTK = 6174;
+
     private final static Logger LOGGER = LogManager.getLogger();
 
     private Task6() {
@@ -18,25 +24,25 @@ public class Task6 {
     public static int arrayToNum(Integer[] a) {
         int num = 0;
         for (int i = 0; i < a.length; i++) {
-            num = num * 10 + a[i];
+            num = num * TEN + a[i];
         }
         return num;
     }
 
     public static Integer[] numToArray(int num) {
-        Integer[] a = new Integer[4];
+        Integer[] a = new Integer[FOUR];
         int num1 = num;
         for (int i = 0; i < a.length; i++) {
-            a[i] = num1 % 10;
-            num1 /= 10;
+            a[i] = num1 % TEN;
+            num1 /= TEN;
         }
         return a;
     }
 
     public static int k(int num) {
         Integer[] a = numToArray(num);
-        Integer[] a1 = Arrays.copyOf(a, 4);
-        Integer[] a2 = Arrays.copyOf(a, 4);
+        Integer[] a1 = Arrays.copyOf(a, FOUR);
+        Integer[] a2 = Arrays.copyOf(a, FOUR);
         Arrays.sort(a1);
         Arrays.sort(a2, Comparator.reverseOrder());
         return arrayToNum(a2) - arrayToNum(a1);
@@ -44,11 +50,11 @@ public class Task6 {
 
     public static int countK(int num) {
         int res = -1;
-        if (num > 1000 && num < 10000) {
+            if (num > THOUSAND && num < THOUSAND*TEN) {
             res = 0;
-            if (num != 6174) {
+            if (num != CONSTK) {
                 int num1 = k(num);
-                if (num1 != 6174) {
+                if (num1 != CONSTK) {
                     res = countK(num1);
                 }
             }
