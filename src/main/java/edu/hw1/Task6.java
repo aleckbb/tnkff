@@ -1,8 +1,8 @@
 package edu.hw1;
 
 import java.util.Arrays;
-import java.util.Scanner;
 import java.util.Comparator;
+import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -50,7 +50,7 @@ public class Task6 {
 
     public static int countK(int num) {
         int res = -1;
-            if (num > THOUSAND && num < THOUSAND*TEN) {
+        if (num > THOUSAND && num < THOUSAND * TEN) {
             res = 0;
             if (num != CONSTK) {
                 int num1 = k(num);
