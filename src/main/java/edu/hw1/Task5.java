@@ -1,8 +1,8 @@
 package edu.hw1;
 
+import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.util.Scanner;
 
 @SuppressWarnings("uncommentedmain")
 
@@ -17,7 +17,8 @@ public class Task5 {
     public static boolean isPalindrome(int num) {
         boolean res = true;
         if (num / TEN != 0) {
-            int num1 = num, tmp = 0;
+            int num1 = num;
+            int tmp = 0;
             while (num1 > 0) {
                 tmp = tmp * TEN + num1 % TEN;
                 num1 /= TEN;
