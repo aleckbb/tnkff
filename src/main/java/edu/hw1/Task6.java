@@ -49,14 +49,11 @@ public class Task6 {
     }
 
     public static int countK(int num) {
-        int res = -1;
-        if (num > THOUSAND && num < THOUSAND * TEN) {
-            res = 0;
-            if (num != CONSTK) {
-                int num1 = k(num);
-                if (num1 != CONSTK) {
-                    res = countK(num1);
-                }
+        int res = 0;
+        if (num != CONSTK) {
+            int num1 = k(num);
+            if (num1 != CONSTK) {
+                res = countK(num1);
             }
         }
         return res + 1;
