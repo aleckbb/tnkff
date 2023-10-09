@@ -45,7 +45,8 @@ public class Task7 {
     }
 
     public static void main(String[] args) {
-        int n, shift;
+        int n;
+        int shift;
         Scanner scanner = new Scanner(System.in);
         LOGGER.info("Введите целое положительное число и размер циклического сдвига.");
         n = scanner.nextInt();
