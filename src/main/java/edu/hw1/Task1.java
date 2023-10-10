@@ -9,13 +9,13 @@ import org.apache.logging.log4j.Logger;
 
 public final class Task1 {
 
-    final static int SIXTY = 60;
+    private final static int SIXTY = 60;
     private final static Logger LOGGER = LogManager.getLogger();
 
     private Task1() {
     }
 
-    public static boolean check(String str) {
+    private static boolean check(String str) {
         Objects.requireNonNull(str);
         boolean res = true;
         if (!str.contains(":") || str.indexOf(':') == 0 || str.indexOf(':') == str.length() - 1

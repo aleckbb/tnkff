@@ -8,13 +8,13 @@ import org.apache.logging.log4j.Logger;
 
 public class Task5 {
 
-    final static int TEN = 10;
+    private final static int TEN = 10;
     private final static Logger LOGGER = LogManager.getLogger();
 
     private Task5() {
     }
 
-    public static boolean isPalindrome(int num) {
+    private static boolean isPalindrome(int num) {
         boolean res = true;
         if (num / TEN != 0) {
             int num1 = num;

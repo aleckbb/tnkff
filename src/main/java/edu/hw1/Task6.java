@@ -10,18 +10,18 @@ import org.apache.logging.log4j.Logger;
 
 public class Task6 {
 
-    final static int FOUR = 4;
-    final static int TEN = 10;
-    final static int THOUSAND = 1000;
+    private final static int FOUR = 4;
 
-    final static int CONSTK = 6174;
+    private final static int TEN = 10;
+
+    private final static int CONSTK = 6174;
 
     private final static Logger LOGGER = LogManager.getLogger();
 
     private Task6() {
     }
 
-    public static int arrayToNum(Integer[] a) {
+    private static int arrayToNum(Integer[] a) {
         int num = 0;
         for (int i = 0; i < a.length; i++) {
             num = num * TEN + a[i];
@@ -29,7 +29,7 @@ public class Task6 {
         return num;
     }
 
-    public static Integer[] numToArray(int num) {
+    private static Integer[] numToArray(int num) {
         Integer[] a = new Integer[FOUR];
         int num1 = num;
         for (int i = 0; i < a.length; i++) {
@@ -39,7 +39,7 @@ public class Task6 {
         return a;
     }
 
-    public static int k(int num) {
+    private static int k(int num) {
         Integer[] a = numToArray(num);
         Integer[] a1 = Arrays.copyOf(a, FOUR);
         Integer[] a2 = Arrays.copyOf(a, FOUR);
@@ -49,8 +49,9 @@ public class Task6 {
     }
 
     public static int countK(int num) {
-        int res = 0;
+        int res = -1;
         if (num != CONSTK) {
+            res = 0;
             int num1 = k(num);
             if (num1 != CONSTK) {
                 res = countK(num1);

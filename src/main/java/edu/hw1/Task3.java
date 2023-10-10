@@ -12,7 +12,7 @@ public class Task3 {
     private Task3() {
     }
 
-    public static int maxArray(int[] a) {
+    private static int maxArray(int[] a) {
         int max = a[0];
         for (int j = 1; j < a.length; j++) {
             if (a[j] > max) {
@@ -22,7 +22,7 @@ public class Task3 {
         return max;
     }
 
-    public static int minArray(int[] a) {
+    private static int minArray(int[] a) {
         int min = a[0];
         for (int j = 1; j < a.length; j++) {
             if (a[j] < min) {

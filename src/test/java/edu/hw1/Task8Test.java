@@ -1,5 +1,6 @@
 package edu.hw1;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,7 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class Task8Test {
 
     @Test
-    void knightBoardCapture() {
+    @DisplayName("Примеры из дз")
+    void test() {
         int[][] a = {
             {0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},

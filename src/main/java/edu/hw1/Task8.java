@@ -7,30 +7,30 @@ import org.apache.logging.log4j.Logger;
 
 public class Task8 {
 
-    final static int ONE = 1;
-    final static int TWO = 2;
-    final static int EIGHT = 8;
+    private final static int ONE = 1;
+    private final static int TWO = 2;
+    private final static int EIGHT = 8;
     private final static Logger LOGGER = LogManager.getLogger();
 
     private Task8() {
     }
 
-    public static boolean top(int[][] a, int i, int j) {
+    private static boolean top(int[][] a, int i, int j) {
         return (i + TWO < EIGHT && j + ONE < EIGHT && a[i + TWO][j + ONE] == ONE
             || i + TWO < EIGHT && j - ONE >= 0 && a[i + TWO][j - ONE] == ONE);
     }
 
-    public static boolean bottom(int[][] a, int i, int j) {
+    private static boolean bottom(int[][] a, int i, int j) {
         return (i - TWO >= 0 && j + ONE < EIGHT && a[i - TWO][j + ONE] == ONE
             || i - TWO >= 0 && j - ONE >= 0 && a[i - TWO][j - ONE] == ONE);
     }
 
-    public static boolean left(int[][] a, int i, int j) {
+    private static boolean left(int[][] a, int i, int j) {
         return (i - ONE >= 0 && j - TWO >= 0 && a[i - ONE][j - TWO] == ONE
             || i + ONE < EIGHT && j - TWO >= 0 && a[i + ONE][j - TWO] == ONE);
     }
 
-    public static boolean right(int[][] a, int i, int j) {
+    private static boolean right(int[][] a, int i, int j) {
         return (i - ONE >= 0 && j + TWO < EIGHT && a[i - ONE][j + TWO] == ONE
             || i + ONE < EIGHT && j + TWO < EIGHT && a[i + ONE][j + TWO] == ONE);
     }

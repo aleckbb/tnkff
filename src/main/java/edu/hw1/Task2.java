@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 public class Task2 {
 
-    final static int TEN = 10;
+    private final static int TEN = 10;
     private final static Logger LOGGER = LogManager.getLogger();
 
     private Task2() {
