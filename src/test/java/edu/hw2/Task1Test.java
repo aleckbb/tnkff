@@ -57,6 +57,10 @@ class Task1Test {
         actual = new Task1.Expr.Exponent(new Task1.Expr.Constant(-1), 9).evaluate();
         expected = -1;
         assertEquals(expected, actual);
+
+        actual = new Task1.Expr.Exponent(new Task1.Expr.Constant(0), -1).evaluate();
+        expected = Double.POSITIVE_INFINITY;
+        assertEquals(expected, actual);
     }
 
     @Test
