@@ -82,7 +82,8 @@ class Task1Test {
     @Test
     @DisplayName("Проверка Multiplication")
     void test5() {
-        double actual = new Task1.Expr.Multiplication(new Task1.Expr.Constant(1), new Task1.Expr.Constant(1)).evaluate();
+        double actual =
+            new Task1.Expr.Multiplication(new Task1.Expr.Constant(1), new Task1.Expr.Constant(1)).evaluate();
         double expected = 1;
         assertEquals(expected, actual);
 
