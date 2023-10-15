@@ -8,6 +8,14 @@ import org.apache.logging.log4j.Logger;
 
 public class Task3 {
 
+    final static String ERROR =  "Error";
+
+    final static String COMPLETE =  " выполнена!";
+
+    final static String CONNECTION =  "Соединение для ";
+
+    final static String CLOSE =  " закрыто";
+
     private final static Logger LOGGER = LogManager.getLogger();
 
     private Task3() {
@@ -25,28 +33,28 @@ public class Task3 {
 
     public static class StableConnection implements Connection {
         public void execute(String command) {
-            LOGGER.info(command + " выполнена!");
+            LOGGER.info(command + COMPLETE);
         }
 
         public void close() {
-            LOGGER.info("Соединение для " + this.getClass().getSimpleName() + " закрыто");
+            LOGGER.info(CONNECTION + this.getClass().getSimpleName() + CLOSE);
         }
     }
 
     public static class FaultyConnection implements Connection {
-        public final int BOUND = 2;
+        public final int intBOUND = 2;
 
         public void execute(String command) throws ConnectionException {
             Random random = new Random();
 
-            if (random.nextInt(BOUND) == 1) {
-                throw new ConnectionException("Error", new RuntimeException());
+            if (random.nextInt(intBOUND) == 1) {
+                throw new ConnectionException(ERROR, new RuntimeException());
             }
-            LOGGER.info(command + " выполнена!");
+            LOGGER.info(command + COMPLETE);
         }
 
         public void close() {
-            LOGGER.info("Соединение для " + this.getClass().getSimpleName() + " закрыто");
+            LOGGER.info(CONNECTION + this.getClass().getSimpleName() + CLOSE);
         }
     }
 
@@ -55,11 +63,11 @@ public class Task3 {
     }
 
     public static class DefaultConnectionManager implements ConnectionManager {
-        public final int BOUND = 5;
+        public final int intBOUND = 5;
 
         public Connection getConnection() {
             Random random = new Random();
-            if (random.nextInt(BOUND) == 0) {
+            if (random.nextInt(intBOUND) == 0) {
                 return new FaultyConnection();
             } else {
                 return new StableConnection();
@@ -84,9 +92,9 @@ public class Task3 {
         private final int maxAttempts;
 
         PopularCommandExecutor(int maxAttempts) {
-            int BOUND = 2;
+            final int intBOUND = 2;
             Random random = new Random();
-            manager = (random.nextInt(BOUND) == 1) ? new DefaultConnectionManager() : new FaultyConnectionManager();
+            manager = (random.nextInt(intBOUND) == 1) ? new DefaultConnectionManager() : new FaultyConnectionManager();
             this.maxAttempts = maxAttempts;
         }
 
@@ -98,7 +106,7 @@ public class Task3 {
             final Connection connection = manager.getConnection();
             boolean fl = true;
             if (maxAttempts == 0) {
-                throw new ConnectionException("Error", new RuntimeException());
+                throw new ConnectionException(ERROR, new RuntimeException());
             }
             for (int cnt = 1; cnt <= maxAttempts && fl; cnt++) {
                 try {
@@ -107,7 +115,7 @@ public class Task3 {
                 } catch (ConnectionException e) {
                     fl = true;
                     if (cnt == maxAttempts) {
-                        throw new ConnectionException("Error", new RuntimeException());
+                        throw new ConnectionException(ERROR, new RuntimeException());
                     }
                 }
             }
