@@ -3,22 +3,23 @@ package edu.hw2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@SuppressWarnings("uncommentedmain")
+
 public class Task4 {
 
     private final static Logger LOGGER = LogManager.getLogger();
 
     private Task4() {
+
     }
 
     public static void main(String[] args) {
         LOGGER.info(callingInfo());
     }
 
-    public record CallingInfo(String className, String methodName) {
-    }
-
     public static CallingInfo callingInfo() {
-        String className, methodName;
+        String className;
+        String  methodName;
         try {
             throw new Exception();
         } catch (Throwable e) {
@@ -34,4 +35,6 @@ public class Task4 {
         return new CallingInfo(className, methodName);
     }
 
+    public record CallingInfo(String className, String methodName) {
+    }
 }
