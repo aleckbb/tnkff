@@ -19,13 +19,13 @@ public class Task4 {
 
     public static CallingInfo callingInfo() {
         String className;
-        String  methodName;
+        String methodName;
         try {
             throw new Exception();
         } catch (Throwable e) {
 
-            StackTraceElement[] stktrace = e.getStackTrace();
-            String str = stktrace[1].toString();
+            StackTraceElement[] stackTrace = e.getStackTrace();
+            String str = stackTrace[1].toString();
             String str1 = str.substring(0, str.indexOf('('));
             int splitIndex = str1.lastIndexOf('.');
             className = str1.substring(0, splitIndex);

@@ -22,8 +22,7 @@ public class Task3 {
     }
 
     public static void main(String[] args) throws Exception {
-        PopularCommandExecutor executor;
-        executor = new PopularCommandExecutor(1);
+        PopularCommandExecutor executor = new PopularCommandExecutor(1, false);
         executor.updatePackages();
     }
 
@@ -47,7 +46,7 @@ public class Task3 {
         public void execute(String command) throws ConnectionException {
             Random random = new Random();
 
-            if (random.nextInt(intBOUND) == 1) {
+            if (random.nextInt(intBOUND) == 0) {
                 throw new ConnectionException(ERROR, new RuntimeException());
             }
             LOGGER.info(command + COMPLETE);
@@ -91,18 +90,16 @@ public class Task3 {
         private final ConnectionManager manager;
         private final int maxAttempts;
 
-        PopularCommandExecutor(int maxAttempts) {
-            final int intBOUND = 2;
-            Random random = new Random();
-            manager = (random.nextInt(intBOUND) == 1) ? new DefaultConnectionManager() : new FaultyConnectionManager();
+        PopularCommandExecutor(int maxAttempts, boolean fl) {
+            manager = fl ? new DefaultConnectionManager() : new FaultyConnectionManager();
             this.maxAttempts = maxAttempts;
         }
 
-        public void updatePackages() throws Exception {
+        public void updatePackages() throws ConnectionException {
             tryExecute("apt update && apt upgrade -y");
         }
 
-        void tryExecute(String command) throws Exception {
+        void tryExecute(String command) throws ConnectionException {
             final Connection connection = manager.getConnection();
             boolean fl = true;
             if (maxAttempts == 0) {
@@ -115,11 +112,15 @@ public class Task3 {
                 } catch (ConnectionException e) {
                     fl = true;
                     if (cnt == maxAttempts) {
-                        throw new ConnectionException(ERROR, new RuntimeException());
+                        throw new ConnectionException(ERROR, e.getCause());
                     }
                 }
             }
-            connection.close();
+            try {
+                connection.close();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

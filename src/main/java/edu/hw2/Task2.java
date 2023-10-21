@@ -14,14 +14,12 @@ public class Task2 {
             this.height = height;
         }
 
-        public Rectangle setWidth(int width) {
+        public void setWidth(int width) {
             this.width = width;
-            return this;
         }
 
-        public Rectangle setHeight(int height) {
+        public void setHeight(int height) {
             this.height = height;
-            return this;
         }
 
         double area() {
@@ -30,7 +28,6 @@ public class Task2 {
     }
 
     public static class Square extends Rectangle {
-
         public Square() {
 
         }
@@ -39,8 +36,9 @@ public class Task2 {
             super(side, side);
         }
 
-        public Square setSide(int side) {
-            return new Square(side);
+        public void setSide(int side) {
+            setHeight(side);
+            setWidth(side);
         }
     }
 }
