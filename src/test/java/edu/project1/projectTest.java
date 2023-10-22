@@ -54,7 +54,7 @@ class projectTest {
     @DisplayName("Повторный ввод буквы")
     void test5() {
         Game game = new Game("ty\ngiveUp\nE");
-        game.start("rect");
+        game.start("fruct");
         String str = game.getOutputStream();
         int index = str.indexOf("Input correct letter");
         String actual = str.substring(index, index + 20);
