@@ -1,4 +1,4 @@
-package edu.hw2;
+package edu.hw2.Task3;
 
 import java.util.Random;
 import org.apache.logging.log4j.LogManager;
@@ -8,13 +8,13 @@ import org.apache.logging.log4j.Logger;
 
 public class Task3 {
 
-    final static String ERROR =  "Error";
+    final static String ERROR = "Error";
 
-    final static String COMPLETE =  " выполнена!";
+    final static String COMPLETE = " выполнена!";
 
-    final static String CONNECTION =  "Соединение для ";
+    final static String CONNECTION = "Соединение для ";
 
-    final static String CLOSE =  " закрыто";
+    final static String CLOSE = " закрыто";
 
     private final static Logger LOGGER = LogManager.getLogger();
 
@@ -24,10 +24,6 @@ public class Task3 {
     public static void main(String[] args) throws Exception {
         PopularCommandExecutor executor = new PopularCommandExecutor(1, false);
         executor.updatePackages();
-    }
-
-    public interface Connection extends AutoCloseable {
-        void execute(String command);
     }
 
     public static class StableConnection implements Connection {
@@ -55,10 +51,6 @@ public class Task3 {
         public void close() {
             LOGGER.info(CONNECTION + this.getClass().getSimpleName() + CLOSE);
         }
-    }
-
-    public interface ConnectionManager {
-        Connection getConnection();
     }
 
     public static class DefaultConnectionManager implements ConnectionManager {
@@ -95,18 +87,18 @@ public class Task3 {
             this.maxAttempts = maxAttempts;
         }
 
-        public void updatePackages() throws ConnectionException {
+        public void updatePackages() throws Exception {
             tryExecute("apt update && apt upgrade -y");
         }
 
-        void tryExecute(String command) throws ConnectionException {
+        void tryExecute(String command) throws Exception {
             final Connection connection = manager.getConnection();
             boolean fl = true;
             if (maxAttempts == 0) {
                 throw new ConnectionException(ERROR, new RuntimeException());
             }
             for (int cnt = 1; cnt <= maxAttempts && fl; cnt++) {
-                try {
+                try (connection) {
                     connection.execute(command);
                     fl = false;
                 } catch (ConnectionException e) {
@@ -115,11 +107,6 @@ public class Task3 {
                         throw new ConnectionException(ERROR, e.getCause());
                     }
                 }
-            }
-            try {
-                connection.close();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
             }
         }
     }

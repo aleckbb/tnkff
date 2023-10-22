@@ -1,6 +1,6 @@
-package edu.hw2;
+package edu.hw2.Task2;
 
-public class Task2 {
+public class Rectangle1 {
     public static class Rectangle {
         private int width;
         private int height;
@@ -24,21 +24,6 @@ public class Task2 {
 
         double area() {
             return width * height;
-        }
-    }
-
-    public static class Square extends Rectangle {
-        public Square() {
-
-        }
-
-        public Square(int side) {
-            super(side, side);
-        }
-
-        public void setSide(int side) {
-            setHeight(side);
-            setWidth(side);
         }
     }
 }

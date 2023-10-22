@@ -1,4 +1,4 @@
-package edu.hw2;
+package edu.hw2.Task3;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ class Task3Test {
     @CsvSource({
         "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
     })
-    void test1(String command) {
+    void test1(String command) throws Exception {
         boolean actual = false;
         boolean expected = true;
         try {
@@ -30,7 +30,7 @@ class Task3Test {
     @CsvSource({
         "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
     })
-    void test2(String command) {
+    void test2(String command) throws Exception {
         boolean actual = false;
         boolean expected = true;
         try {
@@ -45,7 +45,7 @@ class Task3Test {
 
     @Test
     @DisplayName("maxAttempts == 0")
-    void test3() {
+    void test3() throws Exception {
         boolean actual = false;
         boolean expected = true;
         try {

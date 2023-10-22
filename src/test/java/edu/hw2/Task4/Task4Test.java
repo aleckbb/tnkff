@@ -1,4 +1,4 @@
-package edu.hw2;
+package edu.hw2.Task4;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,8 +9,8 @@ class Task4Test {
     @Test
     @DisplayName("Вызов из метода test1")
     void test1() {
-        Task4.CallingInfo actual = Task4.callingInfo();
-        Task4.CallingInfo expected = new Task4.CallingInfo("edu.hw2.Task4Test", "test1");
+        CallingInfo actual = Task4.callingInfo();
+        CallingInfo expected = new CallingInfo("edu.hw2.Task4.Task4Test", "test1");
         assertEquals(expected, actual);
     }
 
@@ -22,13 +22,13 @@ class Task4Test {
 
             }
 
-            public Task4.CallingInfo exampleMethod() {
+            public CallingInfo exampleMethod() {
                 return Task4.callingInfo();
             }
         }
         Example example = new Example();
-        Task4.CallingInfo actual = example.exampleMethod();
-        Task4.CallingInfo expected = new Task4.CallingInfo("edu.hw2.Task4Test$1Example", "exampleMethod");
+        CallingInfo actual = example.exampleMethod();
+        CallingInfo expected = new CallingInfo("edu.hw2.Task4.Task4Test$1Example", "exampleMethod");
         assertEquals(expected, actual);
     }
 }
