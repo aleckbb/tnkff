@@ -27,7 +27,7 @@ public class Game {
         System.setOut(stream);
     }
 
-    public String getOut() {
+    public String getOutputStream() {
         return byteArrayOutputStream.toString();
     }
 
