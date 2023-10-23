@@ -7,9 +7,9 @@ public class Stock implements Comparable<Stock> {
     private int priceOfAStock;
 
     public Stock() {
-        int intBound = 10000;
+        final int INT_BOUND = 10000;
         Random random = new Random();
-        priceOfAStock = random.nextInt(intBound);
+        priceOfAStock = random.nextInt(INT_BOUND);
     }
 
     public Stock(int priceOfAStock) {

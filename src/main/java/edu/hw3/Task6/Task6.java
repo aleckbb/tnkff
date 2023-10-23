@@ -14,8 +14,8 @@ public class Task6 {
 
     public static void main(String[] args) {
         MyMarket myMarket = new MyMarket();
-        int size = 10;
-        for (int i = 0; i < size; ++i) {
+        final int SIZE = 10;
+        for (int i = 0; i < SIZE; ++i) {
             myMarket.add(new Stock());
         }
         LOGGER.info(myMarket.mostValuableStock().getPriceOfAStock());
