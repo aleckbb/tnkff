@@ -1,11 +1,15 @@
 package edu.hw3.Task4;
 
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.util.HashMap;
 
 @SuppressWarnings("uncommentedmain")
 public class Task4 {
+    private static final Integer ZERO = 0;
     private static final Integer ONE = 1;
     private static final Integer FOUR = 4;
     private static final Integer FIVE = 5;
@@ -18,11 +22,11 @@ public class Task4 {
 
     private final static Logger LOGGER = LogManager.getLogger();
 
-    private Task4(){
+    private Task4() {
 
     }
 
-    private static void setHashMap(){
+    private static void setHashMap() {
         hashMap.put(ONE, "I");
         hashMap.put(FIVE, "V");
         hashMap.put(TEN, "X");
@@ -32,96 +36,71 @@ public class Task4 {
         hashMap.put(THOUSAND, "M");
     }
 
-public static String TENS(Integer num, Integer CONST, Integer CONST_PREV){
-    String res = "";
-    if(num >= CONST_PREV - CONST && num < THOUSAND){
-        return hashMap.get(CONST) + hashMap.get(CONST_PREV);
-    }
-    else {
-        for (int i = 0; i < num / CONST; ++i) {
-            res += hashMap.get(CONST);
-        }
-        return res;
-    }
-}
-
-    public static String convertToRoman(Integer num){
+    public static String ones(Integer num, Integer constant, Integer constPrev) {
         String res = "";
-        String str = "";
-        if(num >= ONE && num < THOUSAND*FOUR){
-            if(num >= THOUSAND){
-                res += TENS(num, THOUSAND, ONE);
-                num %= THOUSAND;
+        if (num >= constPrev - constant && num < THOUSAND) {
+            return hashMap.get(constant) + hashMap.get(constPrev);
+        } else {
+            for (int i = ZERO; i < num / constant; ++i) {
+                res += hashMap.get(constant);
             }
-            if(num >= FIVE_HUNDRED){
-                if(num >= THOUSAND - HUNDRED){
-                    res += hashMap.get(HUNDRED) + hashMap.get(THOUSAND);
-                    num %= HUNDRED;
-                }
-                else{
-                    res += hashMap.get(FIVE_HUNDRED);
-                    num %= FIVE_HUNDRED;
-                }
+            return res;
+        }
+    }
+
+    public static List<Serializable> fives(Integer num, Integer constant, Integer constPrev, Integer constNext) {
+        String res = "";
+        Integer tmp = num;
+        if (num >= constPrev - constNext) {
+            res += hashMap.get(constNext) + hashMap.get(constPrev);
+            tmp %= constNext;
+        } else {
+            res += hashMap.get(constant);
+            tmp %= constant;
+        }
+        return Arrays.asList(res, tmp);
+    }
+
+    public static String convertToRoman(Integer num) {
+        String res = "";
+        List<Serializable> list;
+        Integer newNum = num;
+        if (newNum >= ONE && newNum < THOUSAND * FOUR) {
+            if (newNum >= THOUSAND) {
+                res += ones(newNum, THOUSAND, ONE);
+                newNum %= THOUSAND;
             }
-            if(num >= HUNDRED){
-                str = TENS(num, HUNDRED, FIVE_HUNDRED);
-                if(str.equals(hashMap.get(FIVE_HUNDRED - HUNDRED))){
-                    res += hashMap.get(HUNDRED) + hashMap.get(FIVE_HUNDRED);
-                    num %= HUNDRED;
-                }
-                else {
-                    tmp = num / HUNDRED;
-                    num %= HUNDRED;
-                    for (int i = 0; i < tmp; ++i) {
-                        res += hashMap.get(HUNDRED);
-                    }
-                }
+
+            if (newNum >= FIVE_HUNDRED) {
+                list = fives(newNum, FIVE_HUNDRED, THOUSAND, HUNDRED);
+                res += list.get(ZERO);
+                newNum = (Integer) list.get(ONE);
             }
-            if(num >= FIVETEEN){
-                if(num >= HUNDRED - TEN){
-                    res += hashMap.get(TEN) + hashMap.get(HUNDRED);
-                    num %= TEN;
-                }
-                else{
-                    res += hashMap.get(FIVETEEN);
-                    num %= FIVETEEN;
-                }
+
+            if (newNum >= HUNDRED) {
+                res += ones(newNum, HUNDRED, FIVE_HUNDRED);
+                newNum %= HUNDRED;
             }
-            if(num >= TEN){
-                if(num >= FIVETEEN - TEN){
-                    res += hashMap.get(TEN) + hashMap.get(FIVETEEN);
-                    num %= TEN;
-                }
-                else {
-                    tmp = num / TEN;
-                    num %= TEN;
-                    for (int i = 0; i < tmp; ++i) {
-                        res += hashMap.get(TEN);
-                    }
-                }
+
+            if (newNum >= FIVETEEN) {
+                list = fives(newNum, FIVETEEN, HUNDRED, TEN);
+                res += list.get(ZERO);
+                newNum = (Integer) list.get(ONE);
             }
-            if(num >= FIVE){
-                if(num >= TEN - ONE){
-                    res += hashMap.get(ONE) + hashMap.get(TEN);
-                    num %= ONE;
-                }
-                else{
-                    res += hashMap.get(FIVE);
-                    num %= FIVE;
-                }
+
+            if (newNum >= TEN) {
+                res += ones(newNum, TEN, FIVETEEN);
+                newNum %= TEN;
             }
-            if(num >= ONE){
-                if(num >= FIVE - ONE){
-                    res += hashMap.get(ONE) + hashMap.get(FIVE);
-                    num %= ONE;
-                }
-                else {
-                    tmp = num / ONE;
-                    num %= ONE;
-                    for (int i = 0; i < tmp; ++i) {
-                        res += hashMap.get(ONE);
-                    }
-                }
+
+            if (newNum >= FIVE) {
+                list = fives(newNum, FIVE, TEN, ONE);
+                res += list.get(ZERO);
+                newNum = (Integer) list.get(ONE);
+            }
+
+            if (newNum >= ONE) {
+                res += ones(newNum, ONE, FIVE);
             }
         }
         return res;
@@ -129,6 +108,6 @@ public static String TENS(Integer num, Integer CONST, Integer CONST_PREV){
 
     public static void main(String[] args) {
         setHashMap();
-        LOGGER.info(convertToRoman(39));
+        LOGGER.info(convertToRoman(THOUSAND));
     }
 }
