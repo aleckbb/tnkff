@@ -26,7 +26,7 @@ public class Task4 {
 
     }
 
-    private static void setHashMap() {
+    public static void setHashMap() {
         hashMap.put(ONE, "I");
         hashMap.put(FIVE, "V");
         hashMap.put(TEN, "X");
