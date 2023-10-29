@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Contact {
 
-    private final static Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private String name;
     private String surname;
 
