@@ -1,6 +1,5 @@
 package edu.hw2.Task3;
 
-import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -8,15 +7,15 @@ import org.apache.logging.log4j.Logger;
 
 public class Task3 {
 
-    final static String ERROR = "Error";
+    protected static final String ERROR = "Error";
 
-    final static String COMPLETE = " выполнена!";
+    protected static final String COMPLETE = " выполнена!";
 
-    final static String CONNECTION = "Соединение для ";
+    protected static final String CONNECTION = "Соединение для ";
 
-    final static String CLOSE = " закрыто";
+    protected static final String CLOSE = " закрыто";
 
-    private final static Logger LOGGER = LogManager.getLogger();
+    protected final static Logger LOGGER = LogManager.getLogger();
 
     private Task3() {
     }
@@ -24,58 +23,6 @@ public class Task3 {
     public static void main(String[] args) throws Exception {
         PopularCommandExecutor executor = new PopularCommandExecutor(1, false);
         executor.updatePackages();
-    }
-
-    public static class StableConnection implements Connection {
-        public void execute(String command) {
-            LOGGER.info(command + COMPLETE);
-        }
-
-        public void close() {
-            LOGGER.info(CONNECTION + this.getClass().getSimpleName() + CLOSE);
-        }
-    }
-
-    public static class FaultyConnection implements Connection {
-        public final int intBOUND = 2;
-
-        public void execute(String command) throws ConnectionException {
-            Random random = new Random();
-
-            if (random.nextInt(intBOUND) == 0) {
-                throw new ConnectionException(ERROR, new RuntimeException());
-            }
-            LOGGER.info(command + COMPLETE);
-        }
-
-        public void close() {
-            LOGGER.info(CONNECTION + this.getClass().getSimpleName() + CLOSE);
-        }
-    }
-
-    public static class DefaultConnectionManager implements ConnectionManager {
-        public final int intBOUND = 5;
-
-        public Connection getConnection() {
-            Random random = new Random();
-            if (random.nextInt(intBOUND) == 0) {
-                return new FaultyConnection();
-            } else {
-                return new StableConnection();
-            }
-        }
-    }
-
-    public static class FaultyConnectionManager implements ConnectionManager {
-        public Connection getConnection() {
-            return new FaultyConnection();
-        }
-    }
-
-    public static class ConnectionException extends RuntimeException {
-        public ConnectionException(String message, Throwable cause) {
-            super(message, cause);
-        }
     }
 
     public static final class PopularCommandExecutor {

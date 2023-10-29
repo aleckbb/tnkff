@@ -17,6 +17,7 @@ class Task4Test {
     @Test
     @DisplayName("Вызов из метода exampleMethod класса Example")
     void test2() {
+        // Given
         class Example {
             Example() {
 
@@ -27,8 +28,10 @@ class Task4Test {
             }
         }
         Example example = new Example();
+        // When
         CallingInfo actual = example.exampleMethod();
         CallingInfo expected = new CallingInfo("edu.hw2.Task4.Task4Test$1Example", "exampleMethod");
+        // Then
         assertEquals(expected, actual);
     }
 }

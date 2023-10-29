@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 public class Task4 {
 
-    private final static Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private Task4() {
 
