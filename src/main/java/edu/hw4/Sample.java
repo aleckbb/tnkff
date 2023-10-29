@@ -16,7 +16,12 @@ public class Sample {
 
     public static void main(String[] args) {
         Sample sample = new Sample();
-        //Task1.test1(sample);
+        Task1.test1(sample);
+        Task1.test4(sample);
+        Task1.test9(sample);
+        Task1.test10(sample);
+        Task1.test11(sample);
+        Task1.test12(sample);
         Task1.test16(sample);
 
     }
