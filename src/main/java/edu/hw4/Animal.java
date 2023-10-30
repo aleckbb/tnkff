@@ -19,11 +19,11 @@ public record Animal(
 
         private String name;
 
-        Type(String name){
-            this.name =name;
+        Type(String name) {
+            this.name = name;
         }
 
-        public String getName(){
+        public String getName() {
             return this.name;
         }
     }
@@ -34,11 +34,11 @@ public record Animal(
 
         private String name;
 
-        Sex(String name){
-            this.name =name;
+        Sex(String name) {
+            this.name = name;
         }
 
-        public String getName(){
+        public String getName() {
             return this.name;
         }
     }
