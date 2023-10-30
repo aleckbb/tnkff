@@ -10,6 +10,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Task1 {
+
+    private Task1() {
+
+    }
+
     public static List<Animal> test1(Sample sample) {
         return sample.userList.stream()
             .sorted(Comparator.comparing(Animal::height))
@@ -82,9 +87,10 @@ public class Task1 {
     }
 
     public static List<Animal> test11(Sample sample) {
+        final int HUNDRED = 100;
         return sample.userList.stream()
             .filter(Animal::bites)
-            .filter(animal -> animal.height() > 100)
+            .filter(animal -> animal.height() > HUNDRED)
             .toList();
     }
 
@@ -151,12 +157,12 @@ public class Task1 {
             .collect(Collectors.groupingBy(Animal::type));
         int countBitesDog = mapWithDogAndSpider.get(Animal.Type.DOG)
             .stream()
-            .filter(animal -> animal.bites() == true)
+            .filter(animal -> animal.bites())
             .toList()
             .size();
         int countBitesSpider = mapWithDogAndSpider.get(Animal.Type.SPIDER)
             .stream()
-            .filter(animal -> animal.bites() == true)
+            .filter(animal -> animal.bites())
             .toList()
             .size();
         return countBitesSpider > countBitesDog;
@@ -182,7 +188,6 @@ public class Task1 {
     }
 
     public static Map<String, String> test20(Sample sample) {
-        ;
         Map<String, String> mapOfErrorForEachAnimal = new HashMap<>();
         sample.brokenList.stream()
             .forEach(animal -> mapOfErrorForEachAnimal.put(animal.name(), new ValidationError().checkUpdate(animal)));

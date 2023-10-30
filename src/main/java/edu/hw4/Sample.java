@@ -3,6 +3,7 @@ package edu.hw4;
 import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("uncommentedmain")
 public class Sample {
     protected final List<List<Animal>> megaUserList;
     protected final List<Animal> userList = Arrays.asList(
@@ -30,11 +31,11 @@ public class Sample {
     protected final List<Animal> brokenList = Arrays.asList(
         new Animal("", Animal.Type.CAT, Animal.Sex.F, 101, 23, 3, true),
         new Animal(null, Animal.Type.DOG, Animal.Sex.F, 73, -30, 16, true),
-        new Animal("Бублик", null, Animal.Sex.M, 22, 50, 5, false),
-        new Animal("Вася Петя", Animal.Type.FISH, null, 5, 25, 2, false),
-        new Animal("Генадий", Animal.Type.SPIDER, Animal.Sex.F, -10, 10, 3, true),
-        new Animal("Сашок", Animal.Type.CAT, Animal.Sex.F, 1, 10, -67, true),
-        new Animal("Мишутка", Animal.Type.DOG, Animal.Sex.F, 15, -40, 9, true)
+        new Animal("Бубликс", null, Animal.Sex.M, 22, 50, 5, false),
+        new Animal("Вася Петя и Катя", Animal.Type.FISH, null, 5, 25, 2, false),
+        new Animal("Генадиенко", Animal.Type.SPIDER, Animal.Sex.F, -10, 10, 3, true),
+        new Animal("Сашкент", Animal.Type.CAT, Animal.Sex.F, 1, 10, -67, true),
+        new Animal("Медведь", Animal.Type.DOG, Animal.Sex.F, 15, -40, 9, true)
     );
 
     private Sample() {
@@ -42,22 +43,27 @@ public class Sample {
     }
 
     public static void main(String[] args) {
+        final int THREE = 3;
+        final int HUNDRED = 3;
+        final int FOURTY_FIVE = 45;
+        final int FIVE = 5;
+        final int TEN = 10;
         Sample sample = new Sample();
         Task1.test1(sample);
-        Task1.test2(sample, 3);
+        Task1.test2(sample, THREE);
         Task1.test3(sample);
         Task1.test4(sample);
         Task1.test5(sample);
         Task1.test6(sample);
         Task1.test7(sample, 1);
-        Task1.test8(sample, 100);
+        Task1.test8(sample, HUNDRED);
         Task1.test9(sample);
         Task1.test10(sample);
         Task1.test11(sample);
         Task1.test12(sample);
         Task1.test13(sample);
-        Task1.test14(sample, 45);
-        Task1.test15(sample, 5, 10);
+        Task1.test14(sample, FOURTY_FIVE);
+        Task1.test15(sample, FIVE, TEN);
         Task1.test16(sample);
         Task1.test17(sample);
         Task1.test18(sample);
