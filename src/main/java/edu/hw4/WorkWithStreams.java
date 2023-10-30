@@ -9,43 +9,45 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Task1 {
+public class WorkWithStreams {
 
-    private Task1() {
+    private WorkWithStreams() {
 
     }
 
-    public static List<Animal> test1(Sample sample) {
+    public static List<Animal> task1(Sample sample) {
         return sample.userList.stream()
             .sorted(Comparator.comparing(Animal::height))
             .toList();
     }
 
-    public static List<Animal> test2(Sample sample, int k) {
-        return sample.userList.stream()
+    public static List<Animal> task2(Sample sample, int k) {
+        return k < 1 ? null
+            : sample.userList.stream()
             .sorted(new WeightReverseOrderComparator())
             .limit(k)
             .toList();
     }
 
-    public static Map<Animal.Type, Long> test3(Sample sample) {
+    public static Map<Animal.Type, Long> task3(Sample sample) {
         return sample.userList.stream()
             .collect(Collectors.groupingBy(Animal::type, Collectors.counting()));
     }
 
-    public static Animal test4(Sample sample) {
+    public static Animal task4(Sample sample) {
         Optional<Animal> maxSizeOfName = sample.userList.stream()
             .max(Comparator.comparing(animal -> animal.name().length()));
         return maxSizeOfName.orElse(null);
     }
 
-    public static Animal.Sex test5(Sample sample) {
+    public static Animal.Sex task5(Sample sample) {
         Map<Animal.Sex, Long> map = sample.userList.stream()
             .collect(Collectors.groupingBy(Animal::sex, Collectors.counting()));
-        return map.get(Animal.Sex.M) > map.get(Animal.Sex.F) ? Animal.Sex.M : Animal.Sex.F;
+        return map.get(Animal.Sex.M) > map.get(Animal.Sex.F) ? Animal.Sex.M
+            : map.get(Animal.Sex.M) < map.get(Animal.Sex.F) ? Animal.Sex.F : null;
     }
 
-    public static Map<Animal.Type, Animal> test6(Sample sample) {
+    public static Map<Animal.Type, Animal> task6(Sample sample) {
         Map<Animal.Type, List<Animal>> map = sample.userList.stream()
             .collect(Collectors.groupingBy(Animal::type));
         Map<Animal.Type, Animal> newMap = new HashMap<>();
@@ -60,33 +62,35 @@ public class Task1 {
         return newMap;
     }
 
-    public static Animal test7(Sample sample, int k) {
-        return sample.userList.stream()
-            .sorted(Comparator.comparing(Animal::age))
-            .skip(sample.userList.size() - k)
-            .toList().get(0);
+    public static Animal task7(Sample sample, int k) {
+        return (k < 1 || k > sample.userList.size()) ? null
+            : sample.userList.stream()
+            .sorted(Comparator.comparing(Animal::age).reversed())
+            .limit(k)
+            .toList().get(k - 1);
     }
 
-    public static Optional<Animal> test8(Sample sample, int k) {
-        return sample.userList.stream()
+    public static Optional<Animal> task8(Sample sample, int k) {
+        return k < 0 ? Optional.empty()
+            : sample.userList.stream()
             .filter(animal -> animal.height() < k)
             .max(Comparator.comparing(Animal::weight));
     }
 
-    public static Integer test9(Sample sample) {
+    public static Integer task9(Sample sample) {
         return (int) sample.userList.stream()
             .mapToInt(Animal::paws)
             .summaryStatistics()
             .getSum();
     }
 
-    public static List<Animal> test10(Sample sample) {
+    public static List<Animal> task10(Sample sample) {
         return sample.userList.stream()
             .filter(animal -> (animal.paws() != animal.age()))
             .toList();
     }
 
-    public static List<Animal> test11(Sample sample) {
+    public static List<Animal> task11(Sample sample) {
         final int HUNDRED = 100;
         return sample.userList.stream()
             .filter(Animal::bites)
@@ -94,13 +98,13 @@ public class Task1 {
             .toList();
     }
 
-    public static List<Animal> test12(Sample sample) {
+    public static Integer task12(Sample sample) {
         return sample.userList.stream()
             .filter(animal -> animal.height() < animal.weight())
-            .toList();
+            .toList().size();
     }
 
-    public static List<Animal> test13(Sample sample) {
+    public static List<Animal> task13(Sample sample) {
         return sample.userList.stream()
             .filter(animal -> {
                 boolean isTwoWordName = true;
@@ -119,31 +123,37 @@ public class Task1 {
             .toList();
     }
 
-    public static Boolean test14(Sample sample, int k) {
-        List<Animal> listWithDog = sample.userList.stream()
-            .filter(animal -> animal.type().equals(Animal.Type.DOG))
-            .filter(animal -> animal.height() > k)
-            .toList();
-        return !listWithDog.isEmpty();
-    }
-
-    public static Map<Animal.Type, Integer> test15(Sample sample, int k, int l) {
-        Map<Animal.Type, List<Animal>> map = sample.userList.stream()
-            .collect(Collectors.groupingBy(Animal::type));
-        Map<Animal.Type, Integer> newMap = new HashMap<>();
-        for (var it : map.entrySet()) {
-            Integer sumOfWeight = (int) map.get(it.getKey())
-                .stream()
-                .filter(animal -> animal.age() >= k && animal.age() < l)
-                .mapToInt(Animal::weight)
-                .summaryStatistics()
-                .getSum();
-            newMap.put(it.getKey(), sumOfWeight);
+    public static Boolean task14(Sample sample, int k) {
+        if (k >= 0) {
+            List<Animal> listWithDog = sample.userList.stream()
+                .filter(animal -> animal.type().equals(Animal.Type.DOG))
+                .filter(animal -> animal.height() > k)
+                .toList();
+            return !listWithDog.isEmpty();
         }
-        return newMap;
+        return null;
     }
 
-    public static List<Animal> test16(Sample sample) {
+    public static Map<Animal.Type, Integer> task15(Sample sample, int k, int l) {
+        if (k < l && k >= 0) {
+            Map<Animal.Type, List<Animal>> map = sample.userList.stream()
+                .collect(Collectors.groupingBy(Animal::type));
+            Map<Animal.Type, Integer> newMap = new HashMap<>();
+            for (var it : map.entrySet()) {
+                Integer sumOfWeight = (int) map.get(it.getKey())
+                    .stream()
+                    .filter(animal -> animal.age() >= k && animal.age() < l)
+                    .mapToInt(Animal::weight)
+                    .summaryStatistics()
+                    .getSum();
+                newMap.put(it.getKey(), sumOfWeight);
+            }
+            return newMap;
+        }
+        return null;
+    }
+
+    public static List<Animal> task16(Sample sample) {
         return sample.userList.stream()
             .sorted(new TypeComparator()
                 .thenComparing(new SexComparator())
@@ -151,7 +161,7 @@ public class Task1 {
             .toList();
     }
 
-    public static Boolean test17(Sample sample) {
+    public static Boolean task17(Sample sample) {
         Map<Animal.Type, List<Animal>> mapWithDogAndSpider = sample.userList.stream()
             .filter(animal -> animal.type().equals(Animal.Type.DOG) || animal.type().equals(Animal.Type.SPIDER))
             .collect(Collectors.groupingBy(Animal::type));
@@ -168,7 +178,7 @@ public class Task1 {
         return countBitesSpider > countBitesDog;
     }
 
-    public static Animal test18(Sample sample) {
+    public static Animal task18(Sample sample) {
         List<Animal> allAnimal = new ArrayList<>();
         for (var it : sample.megaUserList) {
             allAnimal.addAll(it);
@@ -180,17 +190,25 @@ public class Task1 {
             .get(0);
     }
 
-    public static Map<String, Set<ValidationError>> test19(Sample sample) {
+    public static Map<String, Set<ValidationError>> task19(Sample sample) {
         Map<String, Set<ValidationError>> mapOfErrorForEachAnimal = new HashMap<>();
         sample.brokenList.stream()
-            .forEach(animal -> mapOfErrorForEachAnimal.put(animal.name(), new ValidationError().check(animal)));
+            .forEach((animal) -> {
+                if (!(new ValidationError().check(animal).isEmpty())) {
+                    mapOfErrorForEachAnimal.put(animal.name(), new ValidationError().check(animal));
+                }
+            });
         return mapOfErrorForEachAnimal;
     }
 
-    public static Map<String, String> test20(Sample sample) {
+    public static Map<String, String> task20(Sample sample) {
         Map<String, String> mapOfErrorForEachAnimal = new HashMap<>();
         sample.brokenList.stream()
-            .forEach(animal -> mapOfErrorForEachAnimal.put(animal.name(), new ValidationError().checkUpdate(animal)));
+            .forEach((animal) -> {
+                if (!(new ValidationError().checkUpdate(animal).isEmpty())) {
+                    mapOfErrorForEachAnimal.put(animal.name(), new ValidationError().checkUpdate(animal));
+                }
+            });
         return mapOfErrorForEachAnimal;
     }
 }

@@ -30,44 +30,46 @@ public class Sample {
 
     protected final List<Animal> brokenList = Arrays.asList(
         new Animal("", Animal.Type.CAT, Animal.Sex.F, 101, 23, 3, true),
-        new Animal(null, Animal.Type.DOG, Animal.Sex.F, 73, -30, 16, true),
-        new Animal("Бубликс", null, Animal.Sex.M, 22, 50, 5, false),
-        new Animal("Вася Петя и Катя", Animal.Type.FISH, null, 5, 25, 2, false),
-        new Animal("Генадиенко", Animal.Type.SPIDER, Animal.Sex.F, -10, 10, 3, true),
-        new Animal("Сашкент", Animal.Type.CAT, Animal.Sex.F, 1, 10, -67, true),
-        new Animal("Медведь", Animal.Type.DOG, Animal.Sex.F, 15, -40, 9, true)
+        new Animal("Буча", Animal.Type.DOG, Animal.Sex.F, 73, 30, 16, true),
+        new Animal("Бубликс", null, Animal.Sex.M, -22, 50, 5, false),
+        new Animal("Вася Петя и Катя", Animal.Type.FISH, Animal.Sex.F, 5, 25, 2, false),
+        new Animal("Генадиенко", Animal.Type.SPIDER, Animal.Sex.F, 10, 10, 3, true),
+        new Animal("Сашкент", Animal.Type.CAT, Animal.Sex.F, 1, 10, 67, true),
+        new Animal("Медведь", Animal.Type.DOG, Animal.Sex.F, 15, 40, 9, true)
     );
 
-    private Sample() {
+    protected final List<Animal> nullList = List.of();
+
+    protected Sample() {
         megaUserList = Arrays.asList(userList, userList2);
     }
 
     public static void main(String[] args) {
         final int THREE = 3;
-        final int HUNDRED = 3;
+        final int HUNDRED = 100;
         final int FOURTY_FIVE = 45;
         final int FIVE = 5;
         final int TEN = 10;
         Sample sample = new Sample();
-        Task1.test1(sample);
-        Task1.test2(sample, THREE);
-        Task1.test3(sample);
-        Task1.test4(sample);
-        Task1.test5(sample);
-        Task1.test6(sample);
-        Task1.test7(sample, 1);
-        Task1.test8(sample, HUNDRED);
-        Task1.test9(sample);
-        Task1.test10(sample);
-        Task1.test11(sample);
-        Task1.test12(sample);
-        Task1.test13(sample);
-        Task1.test14(sample, FOURTY_FIVE);
-        Task1.test15(sample, FIVE, TEN);
-        Task1.test16(sample);
-        Task1.test17(sample);
-        Task1.test18(sample);
-        Task1.test19(sample);
-        Task1.test20(sample);
+        WorkWithStreams.task1(sample);
+        WorkWithStreams.task2(sample, THREE);
+        WorkWithStreams.task3(sample);
+        WorkWithStreams.task4(sample);
+        WorkWithStreams.task5(sample);
+        WorkWithStreams.task6(sample);
+        WorkWithStreams.task7(sample, 1);
+        WorkWithStreams.task8(sample, HUNDRED);
+        WorkWithStreams.task9(sample);
+        WorkWithStreams.task10(sample);
+        WorkWithStreams.task11(sample);
+        WorkWithStreams.task12(sample);
+        WorkWithStreams.task13(sample);
+        WorkWithStreams.task14(sample, FOURTY_FIVE);
+        WorkWithStreams.task15(sample, FIVE, TEN);
+        WorkWithStreams.task16(sample);
+        WorkWithStreams.task17(sample);
+        WorkWithStreams.task18(sample);
+        WorkWithStreams.task19(sample);
+        WorkWithStreams.task20(sample);
     }
 }
