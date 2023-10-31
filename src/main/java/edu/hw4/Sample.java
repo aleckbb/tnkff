@@ -30,7 +30,7 @@ public class Sample {
 
     protected final List<Animal> brokenList = Arrays.asList(
         new Animal("", Animal.Type.CAT, Animal.Sex.F, 101, 23, 3, true),
-        new Animal("Буча", Animal.Type.DOG, Animal.Sex.F, 73, 30, 16, true),
+        new Animal("Куча", Animal.Type.DOG, Animal.Sex.F, 73, 30, 16, true),
         new Animal("Бубликс", null, Animal.Sex.M, -22, 50, 5, false),
         new Animal("Вася Петя и Катя", Animal.Type.FISH, Animal.Sex.F, 5, 25, 2, false),
         new Animal("Генадиенко", Animal.Type.SPIDER, Animal.Sex.F, 10, 10, 3, true),
