@@ -2,11 +2,11 @@ package edu.project2;
 
 import java.util.Random;
 
-public class GenerationByEulerAlgorithm implements Generator {
+public class GenerationByEulerAlgorithm
+    implements Generator { // https://habr.com/ru/articles/746916/ - как работает алгоритм Эллера
     @Override
     public Maze generate(int height, int width) {
         Cell[][] grid = new Cell[height][width];
-
         int set = generationOneRow(grid[0], 1, 0);
         for (int x = 1; x < height; ++x) {
             grid[x] = preparingLineForNextStage(grid[x - 1], x);
@@ -14,20 +14,6 @@ public class GenerationByEulerAlgorithm implements Generator {
         }
         modifyLastRow(grid[height - 1]);
         return new Maze(height, width, grid);
-    }
-
-    private void modifyLastRow(Cell[] cellsRow) {
-        for (int i = 0; i < cellsRow.length; ++i) {
-            cellsRow[i].setWallBottom(true);
-        }
-        for (int i = 0; i < cellsRow.length - 1; ++i) {
-            if (cellsRow[i].getWallRight() && cellsRow[i].getSet() != cellsRow[i + 1].getSet()) {
-                cellsRow[i].setWallRight(false);
-            }
-        }
-        for (int i = 0; i < cellsRow.length - 1; ++i) {
-            cellsRow[i + 1].setSet(cellsRow[i].getSet());
-        }
     }
 
     private int generationOneRow(Cell[] cellsRow, int set, int x) {
@@ -38,11 +24,10 @@ public class GenerationByEulerAlgorithm implements Generator {
                 cellsRow[y].setSet(set);
                 set++;
             }
-        }
-        else{
-            for (int y = 0; y < cellsRow.length; ++y) {
-                if (cellsRow[y].getSet() == 0) {
-                    cellsRow[y].setSet(set);
+        } else {
+            for (Cell cell : cellsRow) {
+                if (cell.getSet() == 0) {
+                    cell.setSet(set);
                     set++;
                 }
             }
@@ -53,14 +38,6 @@ public class GenerationByEulerAlgorithm implements Generator {
         return set;
     }
 
-    private void buildWallBottom(Cell[] cellsRow, Random wallOrNo) {
-        for (int y = 0; y < cellsRow.length; ++y) {
-            if (wallOrNo.nextInt(2) == 1 && hasMoreOneCellWithoutWallBottom(cellsRow, cellsRow[y].getSet())) {
-                cellsRow[y].setWallBottom(true);
-            }
-        }
-    }
-
     private void buildWallRight(Cell[] cellsRow, Random wallOrNo) {
         for (int y = 0; y < cellsRow.length - 1; ++y) {
             if (wallOrNo.nextInt(2) == 1) {
@@ -69,38 +46,33 @@ public class GenerationByEulerAlgorithm implements Generator {
                 if (cellsRow[y].getSet() == cellsRow[y + 1].getSet()) {
                     cellsRow[y].setWallRight(true);
                 } else {
-                    cellsRow[y + 1].setSet(cellsRow[y].getSet());
+                    mergeSet(cellsRow, cellsRow[y].getSet(), cellsRow[y + 1].getSet());
                 }
             }
         }
     }
 
-    public Cell[] preparingLineForNextStage(Cell[] cells, int nRow) {
-        Cell[] newCells = copyRow(cells, nRow);
-        for (int i = 0; i < cells.length; ++i) {
-            newCells[i].setWallRight(false);
-            if (newCells[i].getWallBottom()) {
-                newCells[i].setWallBottom(false);
-                newCells[i].setSet(0);
+    private void mergeSet(Cell[] cellsRow, int source, int destination) {
+        for (Cell cell : cellsRow) {
+            if (cell.getSet() == destination) {
+                cell.setSet(source);
             }
         }
-        return newCells;
     }
 
-    public Cell[] copyRow(Cell[] cells, int nRow) {
-        Cell[] newCells = new Cell[cells.length];
-        for (int i = 0; i < cells.length; ++i) {
-            newCells[i] = new Cell(nRow, i);
-            newCells[i].copyCell(cells[i]);
+    private void buildWallBottom(Cell[] cellsRow, Random wallOrNo) {
+        for (Cell cell : cellsRow) {
+            if (wallOrNo.nextInt(2) == 1 && hasMoreOneCellWithoutWallBottom(cellsRow, cell.getSet())) {
+                cell.setWallBottom(true);
+            }
         }
-        return newCells;
     }
 
     public boolean hasMoreOneCellWithoutWallBottom(Cell[] cells, int set) {
         boolean isMoreOneCellWithoutWallBottom = false;
         int cnt = 0;
-        for (int i = 0; i < cells.length && !isMoreOneCellWithoutWallBottom; ++i) {
-            if (cells[i].getSet() == set && !cells[i].getWallBottom()) {
+        for (int y = 0; y < cells.length && !isMoreOneCellWithoutWallBottom; ++y) {
+            if (cells[y].getSet() == set && !cells[y].getWallBottom()) {
                 cnt++;
             }
             if (cnt == 2) {
@@ -108,5 +80,37 @@ public class GenerationByEulerAlgorithm implements Generator {
             }
         }
         return isMoreOneCellWithoutWallBottom;
+    }
+
+    public Cell[] preparingLineForNextStage(Cell[] cells, int nRow) {
+        Cell[] newCells = copyRow(cells, nRow);
+        for (int y = 0; y < cells.length; ++y) {
+            newCells[y].setWallRight(false);
+            if (newCells[y].getWallBottom()) {
+                newCells[y].setWallBottom(false);
+                newCells[y].setSet(0);
+            }
+        }
+        return newCells;
+    }
+
+    public Cell[] copyRow(Cell[] cells, int nRow) {
+        Cell[] newCells = new Cell[cells.length];
+        for (int y = 0; y < cells.length; ++y) {
+            newCells[y] = new Cell(nRow, y);
+            newCells[y].copyCell(cells[y]);
+        }
+        return newCells;
+    }
+
+    private void modifyLastRow(Cell[] cellsRow) {
+        for (int y = 0; y < cellsRow.length - 1; ++y) {
+            cellsRow[y].setWallBottom(true);
+            if (cellsRow[y].getWallRight() && cellsRow[y].getSet() != cellsRow[y + 1].getSet()) {
+                cellsRow[y].setWallRight(false);
+                mergeSet(cellsRow, cellsRow[y].getSet(), cellsRow[y + 1].getSet());
+            }
+        }
+        cellsRow[cellsRow.length - 1].setWallBottom(true);
     }
 }

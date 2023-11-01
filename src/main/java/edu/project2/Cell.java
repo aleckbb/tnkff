@@ -3,8 +3,8 @@ package edu.project2;
 import java.util.Objects;
 
 public final class Cell {
-    private int row;
-    private int col;
+    private final int row;
+    private final int col;
     private boolean wallRight = false;
     private boolean wallBottom = false;
     private int set;
@@ -12,14 +12,6 @@ public final class Cell {
     public Cell(int row, int col) {
         this.row = row;
         this.col = col;
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getCol() {
-        return col;
     }
 
     public boolean getWallRight() {
@@ -34,19 +26,19 @@ public final class Cell {
         return set;
     }
 
-    public void setWallRight(boolean wallRight){
+    public void setWallRight(boolean wallRight) {
         this.wallRight = wallRight;
     }
 
-    public void setWallBottom(boolean wallBottom){
+    public void setWallBottom(boolean wallBottom) {
         this.wallBottom = wallBottom;
     }
 
-    public void setSet(int set){
+    public void setSet(int set) {
         this.set = set;
     }
 
-    public void copyCell(Cell cell){
+    public void copyCell(Cell cell) {
         this.set = cell.set;
         this.wallRight = cell.wallRight;
         this.wallBottom = cell.wallBottom;
@@ -54,14 +46,18 @@ public final class Cell {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
         var that = (Cell) obj;
         return this.row == that.row &&
-                this.col == that.col &&
-                this.wallRight == that.wallRight &&
-                this.wallBottom == that.wallBottom &&
-                this.set == that.set;
+            this.col == that.col &&
+            this.wallRight == that.wallRight &&
+            this.wallBottom == that.wallBottom &&
+            this.set == that.set;
     }
 
     @Override
@@ -72,12 +68,11 @@ public final class Cell {
     @Override
     public String toString() {
         return "Cell[" +
-                "row=" + row + ", " +
-                "col=" + col + ", " +
-                "wallRight=" + wallRight + ", " +
-                "wallBottom=" + wallBottom + ", " +
-                "set=" + set + ']';
+            "row=" + row + ", " +
+            "col=" + col + ", " +
+            "wallRight=" + wallRight + ", " +
+            "wallBottom=" + wallBottom + ", " +
+            "set=" + set + ']';
     }
-
 
 }
