@@ -3,10 +3,11 @@ package edu.project2;
 import java.util.Objects;
 
 public final class Cell {
-    private final int row;
-    private final int col;
+    private int row;
+    private int col;
     private boolean wallRight = false;
     private boolean wallBottom = false;
+    private boolean isVisited = false;
     private int set;
 
     public Cell(int row, int col) {
@@ -22,8 +23,20 @@ public final class Cell {
         return wallBottom;
     }
 
+    public boolean getVisited() {
+        return isVisited;
+    }
+
     public int getSet() {
         return set;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public int getRow() {
+        return row;
     }
 
     public void setWallRight(boolean wallRight) {
@@ -32,6 +45,10 @@ public final class Cell {
 
     public void setWallBottom(boolean wallBottom) {
         this.wallBottom = wallBottom;
+    }
+
+    public void setVisited(boolean isVisited) {
+        this.isVisited = isVisited;
     }
 
     public void setSet(int set) {
@@ -53,11 +70,11 @@ public final class Cell {
             return false;
         }
         var that = (Cell) obj;
-        return this.row == that.row &&
-            this.col == that.col &&
-            this.wallRight == that.wallRight &&
-            this.wallBottom == that.wallBottom &&
-            this.set == that.set;
+        return this.row == that.row
+            && this.col == that.col
+            && this.wallRight == that.wallRight
+            && this.wallBottom == that.wallBottom
+            && this.set == that.set;
     }
 
     @Override
@@ -67,12 +84,10 @@ public final class Cell {
 
     @Override
     public String toString() {
-        return "Cell[" +
-            "row=" + row + ", " +
-            "col=" + col + ", " +
-            "wallRight=" + wallRight + ", " +
-            "wallBottom=" + wallBottom + ", " +
-            "set=" + set + ']';
+        return "Cell[" + "row="
+            + row + ", " + "col="
+            + col + ", " + "wallRight="
+            + wallRight + ", " + "wallBottom="
+            + wallBottom + ", " + "set=" + set + ']';
     }
-
 }

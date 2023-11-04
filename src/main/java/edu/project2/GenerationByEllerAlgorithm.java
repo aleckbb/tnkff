@@ -2,7 +2,8 @@ package edu.project2;
 
 import java.util.Random;
 
-public class GenerationByEulerAlgorithm
+@SuppressWarnings("ParameterAssignment")
+public class GenerationByEllerAlgorithm
     implements Generator { // https://habr.com/ru/articles/746916/ - как работает алгоритм Эллера
     @Override
     public Maze generate(int height, int width) {
@@ -19,6 +20,7 @@ public class GenerationByEulerAlgorithm
     private int generationOneRow(Cell[] cellsRow, int set, int x) {
         Random wallOrNo = new Random();
         if (x == 0) {
+
             for (int y = 0; y < cellsRow.length; ++y) {
                 cellsRow[y] = new Cell(x, y);
                 cellsRow[y].setSet(set);
