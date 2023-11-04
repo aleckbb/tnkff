@@ -66,21 +66,11 @@ public class SolverByWallFollower implements Solver { // по левой рук�
 
         int choice;
         switch (prevDirection) {
-            case -1 -> {
-                choice = firstDirection(upDirection, downDirection, leftDirection, rightDirection);
-            }
-            case 1 -> {
-                choice = nowUpDirection(upDirection, downDirection, leftDirection, rightDirection);
-            }
-            case 2 -> {
-                choice = nowDownDirection(upDirection, downDirection, leftDirection, rightDirection);
-            }
-            case THREE -> {
-                choice = nowLeftDirection(upDirection, downDirection, leftDirection, rightDirection);
-            }
-            default -> {
-                choice = nowRightDirection(upDirection, downDirection, leftDirection, rightDirection);
-            }
+            case -1 -> choice = firstDirection(upDirection, downDirection, leftDirection, rightDirection);
+            case 1 -> choice = nowUpDirection(upDirection, downDirection, leftDirection, rightDirection);
+            case 2 -> choice = nowDownDirection(upDirection, downDirection, leftDirection, rightDirection);
+            case THREE -> choice = nowLeftDirection(upDirection, downDirection, leftDirection, rightDirection);
+            default -> choice = nowRightDirection(upDirection, downDirection, leftDirection, rightDirection);
         }
 
         return choice;
