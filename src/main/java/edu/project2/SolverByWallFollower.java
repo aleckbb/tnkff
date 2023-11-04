@@ -64,65 +64,120 @@ public class SolverByWallFollower implements Solver { // по левой рук�
         boolean leftDirection = isLeftDirection(currentCell, maze);
         boolean rightDirection = isRightDirection(currentCell, maze);
 
-        int choice = 0;
+        int choice;
         switch (prevDirection) {
             case -1 -> {
-                if (upDirection) {
-                    choice = 1;
-                } else if (downDirection) {
-                    choice = 2;
-                } else if (leftDirection) {
-                    choice = THREE;
-                } else if (rightDirection) {
-                    choice = FOUR;
-                }
+                choice = firstDirection(upDirection, downDirection, leftDirection, rightDirection);
             }
             case 1 -> {
-                if (leftDirection) {
-                    choice = THREE;
-                } else if (upDirection) {
-                    choice = 1;
-                } else if (rightDirection) {
-                    choice = FOUR;
-                } else if (downDirection) {
-                    choice = 2;
-                }
+                choice = nowUpDirection(upDirection, downDirection, leftDirection, rightDirection);
             }
             case 2 -> {
-                if (rightDirection) {
-                    choice = FOUR;
-                } else if (downDirection) {
-                    choice = 2;
-                } else if (leftDirection) {
-                    choice = THREE;
-                } else if (upDirection) {
-                    choice = 1;
-                }
+                choice = nowDownDirection(upDirection, downDirection, leftDirection, rightDirection);
             }
-            case 3 -> {
-                if (downDirection) {
-                    choice = 2;
-                } else if (leftDirection) {
-                    choice = THREE;
-                } else if (upDirection) {
-                    choice = 1;
-                } else if (rightDirection) {
-                    choice = FOUR;
-                }
+            case THREE -> {
+                choice = nowLeftDirection(upDirection, downDirection, leftDirection, rightDirection);
             }
-            case 4 -> {
-                if (upDirection) {
-                    choice = 1;
-                } else if (rightDirection) {
-                    choice = FOUR;
-                } else if (downDirection) {
-                    choice = 2;
-                } else if (leftDirection) {
-                    choice = THREE;
-                }
+            default -> {
+                choice = nowRightDirection(upDirection, downDirection, leftDirection, rightDirection);
             }
         }
 
+        return choice;
+    }
+
+    public int firstDirection(
+        boolean upDirection,
+        boolean downDirection,
+        boolean leftDirection,
+        boolean rightDirection
+    ) {
+        int choice = 0;
+        if (upDirection) {
+            choice = 1;
+        } else if (downDirection) {
+            choice = 2;
+        } else if (leftDirection) {
+            choice = THREE;
+        } else if (rightDirection) {
+            choice = FOUR;
+        }
+        return choice;
+    }
+
+    public int nowUpDirection(
+        boolean upDirection,
+        boolean downDirection,
+        boolean leftDirection,
+        boolean rightDirection
+    ) {
+        int choice = 0;
+        if (leftDirection) {
+            choice = THREE;
+        } else if (upDirection) {
+            choice = 1;
+        } else if (rightDirection) {
+            choice = FOUR;
+        } else if (downDirection) {
+            choice = 2;
+        }
+        return choice;
+    }
+
+    public int nowDownDirection(
+        boolean upDirection,
+        boolean downDirection,
+        boolean leftDirection,
+        boolean rightDirection
+    ) {
+        int choice = 0;
+        if (rightDirection) {
+            choice = FOUR;
+        } else if (downDirection) {
+            choice = 2;
+        } else if (leftDirection) {
+            choice = THREE;
+        } else if (upDirection) {
+            choice = 1;
+        }
+        return choice;
+    }
+
+    public int nowLeftDirection(
+        boolean upDirection,
+        boolean downDirection,
+        boolean leftDirection,
+        boolean rightDirection
+    ) {
+        int choice = 0;
+        if (downDirection) {
+            choice = 2;
+        } else if (leftDirection) {
+            choice = THREE;
+        } else if (upDirection) {
+            choice = 1;
+        } else if (rightDirection) {
+            choice = FOUR;
+        }
+        return choice;
+    }
+
+    public int nowRightDirection(
+        boolean upDirection,
+        boolean downDirection,
+        boolean leftDirection,
+        boolean rightDirection
+    ) {
+        int choice = 0;
+        if (upDirection) {
+            choice = 1;
+        } else if (rightDirection) {
+            choice = FOUR;
+        } else if (downDirection) {
+            choice = 2;
+        } else if (leftDirection) {
+            choice = THREE;
+        }
         return choice;
     }
 

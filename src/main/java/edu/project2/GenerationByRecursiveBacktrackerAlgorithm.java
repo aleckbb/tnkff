@@ -60,7 +60,7 @@ public class GenerationByRecursiveBacktrackerAlgorithm implements Generator {
         return new Maze(height, width, grid);
     }
 
-    public void gridInit(Cell[][] grid, int height, int width){
+    public void gridInit(Cell[][] grid, int height, int width) {
         for (int x = 0; x < height; ++x) {
             for (int y = 0; y < width; ++y) {
                 grid[x][y] = new Cell(x, y);
