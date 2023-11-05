@@ -10,9 +10,13 @@ public class RendererMaze implements Renderer {
     private static final String ANSI_RED_BACKGROUND = "\u001B[41m";
     private static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
     private static final int MIN_PATH_LENGTH = 2;
+    private static final String ERROR_MESSAGE = "Введены некорректные данные";
 
     @Override
     public String render(Maze maze) {
+        if (!ValidationUtility.isValidationMaze(maze)) {
+            return ERROR_MESSAGE;
+        }
         resetVisited(maze);
         StringBuilder mazeInString = new StringBuilder();
         for (int j = 0; j < maze.getWidth(); ++j) {
@@ -38,11 +42,11 @@ public class RendererMaze implements Renderer {
 
     @Override
     public String render(Maze maze, List<Cell> path) {
+        if (path.size() < MIN_PATH_LENGTH || !ValidationUtility.isValidationMaze(maze)) {
+            return ERROR_MESSAGE;
+        }
         resetVisited(maze);
         StringBuilder mazeInString = new StringBuilder();
-        if (path.size() < MIN_PATH_LENGTH) {
-            return "Введены некорректные данные";
-        }
         for (int j = 0; j < maze.getWidth(); ++j) {
             mazeInString.append(DOUBLE_WALL);
         }

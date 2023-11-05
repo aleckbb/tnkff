@@ -7,6 +7,9 @@ public class GenerationByEllerAlgorithm
     implements Generator { // https://habr.com/ru/articles/746916/ - как работает алгоритм Эллера
     @Override
     public Maze generate(int height, int width) {
+        if (!ValidationUtility.isValidationSize(height, width)) {
+            return new Maze(height, width, new Cell[0][0]);
+        }
         Cell[][] grid = new Cell[height][width];
         int set = generationOneRow(grid[0], 1, 0);
         for (int x = 1; x < height; ++x) {

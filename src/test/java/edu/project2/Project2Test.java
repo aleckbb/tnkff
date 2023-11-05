@@ -149,6 +149,78 @@ class Project2Test {
         assertEquals(expected, rendererMaze.render(maze, pathByBFS));
     }
 
+    @Test
+    @DisplayName("Доска пустая")
+    void test8() {
+        // Given
+        Maze maze = new Maze(4, 4, new Cell[4][4]);
+        RendererMaze rendererMaze = new RendererMaze();
+        SolverByBFS solverByBFS = new SolverByBFS();
+        Coordinate start = new Coordinate(0, 0);
+        Coordinate end = new Coordinate(3, 3);
+
+        // When
+        List<Cell> pathByBFS = solverByBFS.solve(maze, start, end);
+        String expected = "Введены некорректные данные";
+
+        // Then
+        assertEquals(expected, rendererMaze.render(maze, pathByBFS));
+    }
+
+    @Test
+    @DisplayName("Доска равна null")
+    void test9() {
+        // Given
+        Maze maze = new Maze(4, 4, null);
+        RendererMaze rendererMaze = new RendererMaze();
+        SolverByBFS solverByBFS = new SolverByBFS();
+        Coordinate start = new Coordinate(0, 0);
+        Coordinate end = new Coordinate(3, 3);
+
+        // When
+        List<Cell> pathByBFS = solverByBFS.solve(maze, start, end);
+        String expected = "Введены некорректные данные";
+
+        // Then
+        assertEquals(expected, rendererMaze.render(maze, pathByBFS));
+    }
+
+    @Test
+    @DisplayName("Лабиринт равен null")
+    void test10() {
+        // Given
+        Maze maze = null;
+        RendererMaze rendererMaze = new RendererMaze();
+        SolverByBFS solverByBFS = new SolverByBFS();
+        Coordinate start = new Coordinate(0, 0);
+        Coordinate end = new Coordinate(3, 3);
+
+        // When
+        List<Cell> pathByBFS = solverByBFS.solve(maze, start, end);
+        String expected = "Введены некорректные данные";
+
+        // Then
+        assertEquals(expected, rendererMaze.render(maze, pathByBFS));
+    }
+
+    @Test
+    @DisplayName("Размеры некооректные")
+    void test11() {
+        // Given
+        Maze maze = new Maze(-1, 10, getGrid());
+        RendererMaze rendererMaze = new RendererMaze();
+        SolverByBFS solverByBFS = new SolverByBFS();
+        Coordinate start = new Coordinate(0, 0);
+        Coordinate end = new Coordinate(3, 3);
+
+        // When
+        List<Cell> pathByBFS = solverByBFS.solve(maze, start, end);
+        String expected = "Введены некорректные данные";
+
+        // Then
+        assertEquals(expected, rendererMaze.render(maze, pathByBFS));
+    }
+
     @NotNull private static Maze getMaze() {
         Cell[][] grid = new Cell[][] {
             {new Cell(0, 0, false, false),
@@ -171,4 +243,24 @@ class Project2Test {
         return new Maze(4, 4, grid);
     }
 
+    @NotNull private static Cell[][] getGrid() {
+        return new Cell[][] {
+            {new Cell(0, 0, false, false),
+                new Cell(0, 1, false, true),
+                new Cell(0, 2, false, true),
+                new Cell(0, 3, true, false)},
+            {new Cell(1, 0, false, true),
+                new Cell(1, 1, true, true),
+                new Cell(1, 2, true, false),
+                new Cell(1, 3, true, false)},
+            {new Cell(2, 0, false, false),
+                new Cell(2, 1, true, true),
+                new Cell(2, 2, false, false),
+                new Cell(2, 3, true, true)},
+            {new Cell(3, 0, false, true),
+                new Cell(3, 1, false, true),
+                new Cell(3, 2, false, true),
+                new Cell(3, 3, true, true)}
+        };
+    }
 }

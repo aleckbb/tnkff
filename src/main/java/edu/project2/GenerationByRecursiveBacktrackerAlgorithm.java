@@ -9,6 +9,9 @@ public class GenerationByRecursiveBacktrackerAlgorithm implements Generator {
 
     @Override
     public Maze generate(int height, int width) {
+        if (!ValidationUtility.isValidationSize(height, width)) {
+            return new Maze(height, width, new Cell[0][0]);
+        }
         Cell[][] grid = new Cell[height][width];
         gridInit(grid, height, width);
         Random random = new Random();

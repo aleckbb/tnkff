@@ -10,12 +10,14 @@ public class SolverByBFS implements Solver {
 
     @Override
     public List<Cell> solve(Maze maze, Coordinate start, Coordinate end) {
-        resetVisited(maze);
         List<Cell> path = new ArrayList<>();
-        Stack<Cell> cellStack = new Stack<>();
-        if (!isValidCoordinate(maze, start) || !isValidCoordinate(maze, end)) {
+        if (!ValidationUtility.isValidationMaze(maze)
+            || !ValidationUtility.isValidationCoordinate(maze, start)
+            || !ValidationUtility.isValidationCoordinate(maze, end)) {
             return path;
         }
+        resetVisited(maze);
+        Stack<Cell> cellStack = new Stack<>();
         Cell currentCell = maze.getGrid()[start.row()][start.col()];
         cellStack.add(currentCell);
 
@@ -105,12 +107,5 @@ public class SolverByBFS implements Solver {
                 maze.getGrid()[x][y].setVisited(false);
             }
         }
-    }
-
-    public boolean isValidCoordinate(Maze maze, Coordinate coordinate) {
-        return coordinate.row() >= 0
-            && coordinate.row() <= maze.getHeight() - 1
-            && coordinate.col() >= 0
-            && coordinate.col() <= maze.getWidth() - 1;
     }
 }
