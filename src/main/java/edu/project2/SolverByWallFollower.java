@@ -4,14 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+@SuppressWarnings("InnerAssignment")
 public class SolverByWallFollower implements Solver { // по левой руке
     private static final int THREE = 3;
     private static final int FOUR = 4;
 
     @Override
     public List<Cell> solve(Maze maze, Coordinate start, Coordinate end) {
+        resetVisited(maze);
         List<Cell> path = new ArrayList<>();
         Stack<Cell> cellStack = new Stack<>();
+        if (!isValidCoordinate(maze, start) || !isValidCoordinate(maze, end)) {
+            return path;
+        }
         Cell currentCell = maze.getGrid()[start.row()][start.col()];
         cellStack.add(currentCell);
 
@@ -193,5 +198,20 @@ public class SolverByWallFollower implements Solver { // по левой рук�
         return currentCell.getCol() != maze.getWidth() - 1
             && !maze.getGrid()[currentCell.getRow()][currentCell.getCol()].getWallRight()
             && !maze.getGrid()[currentCell.getRow()][currentCell.getCol() + 1].getVisited();
+    }
+
+    public void resetVisited(Maze maze) {
+        for (int x = 0; x < maze.getHeight(); ++x) {
+            for (int y = 0; y < maze.getWidth(); ++y) {
+                maze.getGrid()[x][y].setVisited(false);
+            }
+        }
+    }
+
+    public boolean isValidCoordinate(Maze maze, Coordinate coordinate) {
+        return coordinate.row() >= 0
+            && coordinate.row() <= maze.getHeight() - 1
+            && coordinate.col() >= 0
+            && coordinate.col() <= maze.getWidth() - 1;
     }
 }

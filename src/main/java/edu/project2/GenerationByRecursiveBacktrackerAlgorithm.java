@@ -52,11 +52,6 @@ public class GenerationByRecursiveBacktrackerAlgorithm implements Generator {
                 }
             }
         }
-        for (int x = 0; x < height; ++x) {
-            for (int y = 0; y < width; ++y) {
-                grid[x][y].setVisited(false);
-            }
-        }
         return new Maze(height, width, grid);
     }
 

@@ -15,6 +15,13 @@ public final class Cell {
         this.col = col;
     }
 
+    public Cell(int row, int col, boolean wallRight, boolean wallBottom) {
+        this.row = row;
+        this.col = col;
+        this.wallRight = wallRight;
+        this.wallBottom = wallBottom;
+    }
+
     public boolean getWallRight() {
         return wallRight;
     }
