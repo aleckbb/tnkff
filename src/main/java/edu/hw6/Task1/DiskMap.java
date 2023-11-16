@@ -10,19 +10,13 @@ import java.util.AbstractMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
 
 public class DiskMap extends AbstractMap<String, String> implements Map<String, String> {
-    private static final String PATH = "src/main/java/edu/hw6/Task1/Map.txt";
+    public static final String PATH = "src/main/java/edu/hw6/Task1/Map.txt";
 
     public DiskMap() {
         this.clear();
-    }
-
-    public static void main(String[] args) {
-        DiskMap diskMap = new DiskMap();
-        diskMap.put("1", "2");
-        diskMap.put("2", "3");
-        System.out.println(diskMap);
     }
 
     public void write(Set<Entry<String, String>> entrySet) {
@@ -30,11 +24,12 @@ public class DiskMap extends AbstractMap<String, String> implements Map<String, 
             for (var entry : entrySet) {
                 oos.writeObject(entry);
             }
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             throw new RuntimeException(e);
         }
     }
 
+    @NotNull
     @Override
     public Set<Entry<String, String>> entrySet() {
         Set<Entry<String, String>> entrySet = new HashSet<>();
