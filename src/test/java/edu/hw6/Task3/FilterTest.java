@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import static edu.hw6.Task3.Filter.regexContains;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class FilterImplTest {
+class FilterTest {
     public static final Path DIRECTORY = Path.of("src/main/java/edu/hw6/Task3/files");
 
     @Test
@@ -113,7 +113,7 @@ class FilterImplTest {
         List<Path> list = new ArrayList<>();
         List<Path> expected = List.of(
             Path.of("src/main/java/edu/hw6/Task3/files/123.txt, src/main/java/edu/hw6/Task3/files/132.txt" +
-                ", src/main/java/edu/hw6/Task3/files/321.xml")
+                ", src/main/java/edu/hw6/Task3/files/321.dox")
         );
 
         // When
