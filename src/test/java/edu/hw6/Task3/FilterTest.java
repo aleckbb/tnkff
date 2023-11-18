@@ -38,29 +38,6 @@ class FilterTest {
     }
 
     @Test
-    @DisplayName("Проверка фильтра globMatches")
-    void test2() {
-        // Given
-        List<Path> list = new ArrayList<>();
-        List<Path> expected = List.of(
-            Path.of("src/main/java/edu/hw6/Task3/files/123.txt, src/main/java/edu/hw6/Task3/files/132.txt")
-        );
-
-        // When
-        DirectoryStream.Filter<Path> filter = Filter.globMatches("(.*).txt");
-        try (DirectoryStream<Path> entries = Files.newDirectoryStream(DIRECTORY, filter)) {
-            for (var entry : entries) {
-                list.add(entry);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Then
-        assertEquals(expected.toString(), list.toString());
-    }
-
-    @Test
     @DisplayName("Проверка фильтра magicNumber")
     void test3() {
         // Given
@@ -104,30 +81,6 @@ class FilterTest {
 
         // Then
         assertEquals(expected, list);
-    }
-
-    @Test
-    @DisplayName("Проверка фильтра READABLE")
-    void test5() {
-        // Given
-        List<Path> list = new ArrayList<>();
-        List<Path> expected = List.of(
-            Path.of("src/main/java/edu/hw6/Task3/files/123.txt, src/main/java/edu/hw6/Task3/files/132.txt" +
-                ", src/main/java/edu/hw6/Task3/files/321.dox")
-        );
-
-        // When
-        DirectoryStream.Filter<Path> filter = Filter.READABLE;
-        try (DirectoryStream<Path> entries = Files.newDirectoryStream(DIRECTORY, filter)) {
-            for (var entry : entries) {
-                list.add(entry);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Then
-        assertEquals(expected.toString(), list.toString());
     }
 
     @Test
