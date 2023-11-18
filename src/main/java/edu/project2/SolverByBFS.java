@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Stack;
 
 public class SolverByBFS implements Solver {
+    private static final int ONE = 1;
+    private static final int TWO = 2;
     private static final int THREE = 3;
     private static final int FOUR = 4;
 
@@ -28,12 +30,12 @@ public class SolverByBFS implements Solver {
                 path.addFirst(cellStack.pop());
             } else {
                 switch (direction(currentCell, maze)) {
-                    case 1 -> {
+                    case ONE -> {
                         currentCell = maze.getGrid()[currentCell.getRow() - 1][currentCell.getCol()];
                         cellStack.add(currentCell);
                         currentCell.setVisited(true);
                     }
-                    case 2 -> {
+                    case TWO -> {
                         currentCell = maze.getGrid()[currentCell.getRow() + 1][currentCell.getCol()];
                         cellStack.add(currentCell);
                         currentCell.setVisited(true);
@@ -50,7 +52,9 @@ public class SolverByBFS implements Solver {
                     }
                     default -> {
                         cellStack.pop();
-                        currentCell = cellStack.peek();
+                        if (!cellStack.isEmpty()) {
+                            currentCell = cellStack.peek();
+                        }
                     }
                 }
             }
@@ -66,9 +70,9 @@ public class SolverByBFS implements Solver {
 
         int choice = 0;
         if (upDirection) {
-            choice = 1;
+            choice = ONE;
         } else if (downDirection) {
-            choice = 2;
+            choice = TWO;
         } else if (leftDirection) {
             choice = THREE;
         } else if (rightDirection) {

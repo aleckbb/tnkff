@@ -6,6 +6,8 @@ import java.util.Stack;
 
 @SuppressWarnings("InnerAssignment")
 public class SolverByWallFollower implements Solver { // по левой руке
+    private static final int ONE = 1;
+    private static final int TWO = 2;
     private static final int THREE = 3;
     private static final int FOUR = 4;
 
@@ -29,17 +31,17 @@ public class SolverByWallFollower implements Solver { // по левой рук�
                 path.addFirst(cellStack.pop());
             } else {
                 switch (direction(currentCell, maze, prevDirection)) {
-                    case 1 -> {
+                    case ONE -> {
                         currentCell = maze.getGrid()[currentCell.getRow() - 1][currentCell.getCol()];
                         cellStack.add(currentCell);
                         currentCell.setVisited(true);
-                        prevDirection = 1;
+                        prevDirection = ONE;
                     }
-                    case 2 -> {
+                    case TWO -> {
                         currentCell = maze.getGrid()[currentCell.getRow() + 1][currentCell.getCol()];
                         cellStack.add(currentCell);
                         currentCell.setVisited(true);
-                        prevDirection = 2;
+                        prevDirection = TWO;
                     }
                     case THREE -> {
                         currentCell = maze.getGrid()[currentCell.getRow()][currentCell.getCol() - 1];
@@ -73,9 +75,9 @@ public class SolverByWallFollower implements Solver { // по левой рук�
 
         int choice;
         switch (prevDirection) {
-            case -1 -> choice = firstDirection(upDirection, downDirection, leftDirection, rightDirection);
-            case 1 -> choice = nowUpDirection(upDirection, downDirection, leftDirection, rightDirection);
-            case 2 -> choice = nowDownDirection(upDirection, downDirection, leftDirection, rightDirection);
+            case -ONE -> choice = firstDirection(upDirection, downDirection, leftDirection, rightDirection);
+            case ONE -> choice = nowUpDirection(upDirection, downDirection, leftDirection, rightDirection);
+            case TWO -> choice = nowDownDirection(upDirection, downDirection, leftDirection, rightDirection);
             case THREE -> choice = nowLeftDirection(upDirection, downDirection, leftDirection, rightDirection);
             default -> choice = nowRightDirection(upDirection, downDirection, leftDirection, rightDirection);
         }
@@ -91,9 +93,9 @@ public class SolverByWallFollower implements Solver { // по левой рук�
     ) {
         int choice = 0;
         if (upDirection) {
-            choice = 1;
+            choice = ONE;
         } else if (downDirection) {
-            choice = 2;
+            choice = TWO;
         } else if (leftDirection) {
             choice = THREE;
         } else if (rightDirection) {
@@ -112,11 +114,11 @@ public class SolverByWallFollower implements Solver { // по левой рук�
         if (leftDirection) {
             choice = THREE;
         } else if (upDirection) {
-            choice = 1;
+            choice = ONE;
         } else if (rightDirection) {
             choice = FOUR;
         } else if (downDirection) {
-            choice = 2;
+            choice = TWO;
         }
         return choice;
     }
@@ -131,11 +133,11 @@ public class SolverByWallFollower implements Solver { // по левой рук�
         if (rightDirection) {
             choice = FOUR;
         } else if (downDirection) {
-            choice = 2;
+            choice = TWO;
         } else if (leftDirection) {
             choice = THREE;
         } else if (upDirection) {
-            choice = 1;
+            choice = ONE;
         }
         return choice;
     }
@@ -148,11 +150,11 @@ public class SolverByWallFollower implements Solver { // по левой рук�
     ) {
         int choice = 0;
         if (downDirection) {
-            choice = 2;
+            choice = TWO;
         } else if (leftDirection) {
             choice = THREE;
         } else if (upDirection) {
-            choice = 1;
+            choice = ONE;
         } else if (rightDirection) {
             choice = FOUR;
         }
@@ -167,11 +169,11 @@ public class SolverByWallFollower implements Solver { // по левой рук�
     ) {
         int choice = 0;
         if (upDirection) {
-            choice = 1;
+            choice = ONE;
         } else if (rightDirection) {
             choice = FOUR;
         } else if (downDirection) {
-            choice = 2;
+            choice = TWO;
         } else if (leftDirection) {
             choice = THREE;
         }

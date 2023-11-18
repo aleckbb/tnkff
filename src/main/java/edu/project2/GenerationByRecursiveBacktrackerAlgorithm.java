@@ -4,6 +4,8 @@ import java.util.Random;
 import java.util.Stack;
 
 public class GenerationByRecursiveBacktrackerAlgorithm implements Generator {
+    private static final int ONE = 1;
+    private static final int TWO = 2;
     private static final int THREE = 3;
     private static final int FOUR = 4;
 
@@ -23,13 +25,13 @@ public class GenerationByRecursiveBacktrackerAlgorithm implements Generator {
         currentCell.setVisited(true);
         while (!cellStack.isEmpty()) {
             switch (direction(currentCell, grid, height, width)) {
-                case 1 -> {
+                case ONE -> {
                     currentCell = grid[currentCell.getRow() - 1][currentCell.getCol()];
                     currentCell.setWallBottom(false);
                     cellStack.add(currentCell);
                     currentCell.setVisited(true);
                 }
-                case 2 -> {
+                case TWO -> {
                     currentCell.setWallBottom(false);
                     currentCell = grid[currentCell.getRow() + 1][currentCell.getCol()];
                     cellStack.add(currentCell);
@@ -78,12 +80,12 @@ public class GenerationByRecursiveBacktrackerAlgorithm implements Generator {
         Random random = new Random();
         while (choice == 0 && (upDirection || downDirection || leftDirection || rightDirection)) {
             switch (random.nextInt(FOUR) + 1) {
-                case 1 -> {
+                case ONE -> {
                     if (upDirection) {
                         choice = 1;
                     }
                 }
-                case 2 -> {
+                case TWO -> {
                     if (downDirection) {
                         choice = 2;
                     }

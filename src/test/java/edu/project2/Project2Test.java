@@ -221,6 +221,38 @@ class Project2Test {
         assertEquals(expected, rendererMaze.render(maze, pathByBFS));
     }
 
+    @Test
+    @DisplayName("Массив нерешаемый, solverByWallFollower возвращает пустой список")
+    void test12() {
+        // Given
+        Maze maze = getUnsolvableMaze();
+        SolverByWallFollower solverByWallFollower = new SolverByWallFollower();
+        Coordinate start = new Coordinate(0, 0);
+        Coordinate end = new Coordinate(3, 3);
+
+        // When
+        List<Cell> path = solverByWallFollower.solve(maze, start, end);
+
+        // Then
+        assertEquals(0, path.size());
+    }
+
+    @Test
+    @DisplayName("Массив нерешаемый, solverByBFS возвращает пустой список")
+    void test13() {
+        // Given
+        Maze maze = getUnsolvableMaze();
+        SolverByBFS solverByBFS = new SolverByBFS();
+        Coordinate start = new Coordinate(0, 0);
+        Coordinate end = new Coordinate(3, 3);
+
+        // When
+        List<Cell> path = solverByBFS.solve(maze, start, end);;
+
+        // Then
+        assertEquals(0, path.size());
+    }
+
     @NotNull private static Maze getMaze() {
         Cell[][] grid = new Cell[][] {
             {new Cell(0, 0, false, false),
@@ -262,5 +294,27 @@ class Project2Test {
                 new Cell(3, 2, false, true),
                 new Cell(3, 3, true, true)}
         };
+    }
+
+    @NotNull private static Maze getUnsolvableMaze() {
+        Cell[][] grid = new Cell[][] {
+            {new Cell(0, 0, false, false),
+                new Cell(0, 1, false, true),
+                new Cell(0, 2, false, true),
+                new Cell(0, 3, true, false)},
+            {new Cell(1, 0, false, true),
+                new Cell(1, 1, true, true),
+                new Cell(1, 2, true, false),
+                new Cell(1, 3, true, false)},
+            {new Cell(2, 0, false, false),
+                new Cell(2, 1, true, true),
+                new Cell(2, 2, false, false),
+                new Cell(2, 3, true, true)},
+            {new Cell(3, 0, false, true),
+                new Cell(3, 1, false, true),
+                new Cell(3, 2, true, true),
+                new Cell(3, 3, true, true)}
+        };
+        return new Maze(4, 4, grid);
     }
 }
