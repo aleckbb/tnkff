@@ -11,8 +11,6 @@ class UtilTest {
 
     public static final String QWER = "qwer";
 
-    //    System.out.println(rightAlignmentFixSize("qwer","*", 4));
-//        System.out.println(middleAlignmentFixSize("qwer","*", 5));
     private static Stream<Arguments> provideStringsForMiddleAlignmentTest() {
         return Stream.of(
             Arguments.of(
