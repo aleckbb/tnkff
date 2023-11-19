@@ -6,8 +6,6 @@ public class Util {
 
     private Util() { }
 
-    public static final String DATA_PATH = "src/main/java/edu/project3/data";
-
     public static String middleAlignmentFixSize(String str, String additionalSymbol, int expectedLen) {
         int len = str.length();
         if (len > expectedLen) {

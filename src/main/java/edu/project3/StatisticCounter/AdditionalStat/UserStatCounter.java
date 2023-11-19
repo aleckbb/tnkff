@@ -18,7 +18,6 @@ public class UserStatCounter implements StatisticCounter<Map<String, Integer>> {
         for (var log : logRecords) {
             ans.merge(log.user(), 1, Integer::sum);
         }
-
         return new Statistic<>(TITLE, KEY_NAME, VALUE_NAME, ans);
     }
 }

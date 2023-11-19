@@ -34,17 +34,18 @@ public class ParserImpl implements Parser {
                     .build();
 
                 try (FileOutputStream fos = new FileOutputStream(FILE_FOR_DOWNLOAD, false)) {
-                } catch (IOException ignore) { }
+                } catch (IOException ignore) {
+                }
                 HttpResponse<Path> response =
-                    client.send(request,  HttpResponse.BodyHandlers.ofFile(
+                    client.send(request, HttpResponse.BodyHandlers.ofFile(
                         Path.of(FILE_FOR_DOWNLOAD)));
 
                 return parseFile(response.body()).toList();
-            } catch (IOException | InterruptedException ignore) { }
-        } catch (IllegalArgumentException ignore) { }
+            } catch (IOException | InterruptedException ignore) {
+            }
+        } catch (IllegalArgumentException ignore) {
+        }
 
-
-        //local dir handler
         Path dir = Path.of(regOrURL);
         try (var files = Files.list(dir)) {
             return files.flatMap(ParserImpl::parseFile).toList();
@@ -69,7 +70,7 @@ public class ParserImpl implements Parser {
 
     public static LogRecord parseLog(String line) {
         var split = line.split(" ");
-        String address = split[0];//.substring(1);
+        String address = split[0];
         String user = split[2];
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy:HH:mm:ssZ", Locale.ENGLISH);
         OffsetDateTime date = OffsetDateTime.parse(split[3].substring(1).concat(split[4].substring(0, 5)), formatter);
@@ -86,7 +87,8 @@ public class ParserImpl implements Parser {
         }
         String httpUserAgent = sb.toString();
 
-        return new LogRecord(address,
+        return new LogRecord(
+            address,
             user,
             date,
             request,

@@ -22,7 +22,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Main {
-    //    public static final String DEFAULT_FORMAT_STRING = "markdown";
     public static final String DEFAULT_FORMAT_STRING = "adoc";
 
     private Main() { }
@@ -38,12 +37,6 @@ public class Main {
         LOGGER.info("\n" + s);
     }
 
-    /*
-     scenario 1
-     --path https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs
-     scenario 2
-     --path src/main/java/edu/project3/data
-     */
     public static void main(String[] args) {
         String path = "src/main/java/edu/project3/Logs";
         OffsetDateTime fromDate = null;
@@ -51,7 +44,6 @@ public class Main {
         String format = DEFAULT_FORMAT_STRING;
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        //fromDate = OffsetDateTime.parse("2015-05-01", formatter);
         int argsLength = args.length;
         for (int i = 0; i < argsLength; i += 2) {
             if (KEYS.contains(args[i])) {
