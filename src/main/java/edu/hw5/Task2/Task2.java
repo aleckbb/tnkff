@@ -37,14 +37,10 @@ public class Task2 {
         if (!matcher.find()) {
             return null;
         }
-        var datePrepare = dateString.split("-");
-        int year = Integer.parseInt(datePrepare[0]);
-        int month = Integer.parseInt(datePrepare[1]);
-        int day = Integer.parseInt(datePrepare[2]);
-        LocalDate currentDate = LocalDate.of(year, month, day);
-        List<LocalDate> listOfFridaysThirteenth = findAllFridayThirteen(year);
+        LocalDate currentDate = LocalDate.parse(dateString);
+        List<LocalDate> listOfFridaysThirteenth = findAllFridayThirteen(currentDate.getYear());
         if (listOfFridaysThirteenth.isEmpty()) {
-            atLeastOneFridayThirteen(listOfFridaysThirteenth, year);
+            atLeastOneFridayThirteen(listOfFridaysThirteenth, currentDate.getYear());
         }
 
         TemporalAdjuster temporalAdjuster = t -> {
@@ -58,7 +54,7 @@ public class Task2 {
         };
         LocalDate nextFridayThirteen = currentDate.with(temporalAdjuster);
         if (nextFridayThirteen == null) {
-            nextFridayThirteen = findNextFridayThirteenInNextYears(listOfFridaysThirteenth, year);
+            nextFridayThirteen = findNextFridayThirteenInNextYears(listOfFridaysThirteenth, currentDate.getYear());
         }
         return nextFridayThirteen;
     }

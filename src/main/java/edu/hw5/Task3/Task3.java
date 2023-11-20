@@ -1,6 +1,7 @@
 package edu.hw5.Task3;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -47,6 +48,12 @@ public class Task3 {
             NINTH_PATTERN
         );
 
+    public static final int FIRST_PATTERN_MATCH = 0;
+
+    public static final int SECOND_PATTERN_MATCH = 1;
+
+    public static final int THIRD_PATTERN_MATCH = 2;
+
     public static final int FOURTH_PATTERN_MATCH = 3;
 
     public static final int FIFTH_PATTERN_MATCH = 4;
@@ -72,32 +79,23 @@ public class Task3 {
             if (matcher.find()) {
                 isMatch = true;
                 switch (i) {
-                    case 0, 1 -> {
-                        String[] parseDate = string.split("-");
-                        resultDate = LocalDate.of(
-                            Integer.parseInt(parseDate[0]),
-                            Integer.parseInt(parseDate[1]),
-                            Integer.parseInt(parseDate[2])
-                        );
+                    case FIRST_PATTERN_MATCH -> {
+                        resultDate = LocalDate.parse(string);
                         break;
                     }
-                    case 2 -> {
-                        String[] parseDate = string.split("/");
-                        resultDate = LocalDate.of(
-                            Integer.parseInt("20" + parseDate[2]),
-                            Integer.parseInt(parseDate[0]),
-                            Integer.parseInt(parseDate[1])
-                        );
+                    case SECOND_PATTERN_MATCH -> {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d");
+                        resultDate = LocalDate.parse(string, formatter);
+                        break;
+                    }
+                    case THIRD_PATTERN_MATCH -> {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yy");
+                        resultDate = LocalDate.parse(string, formatter);
                         break;
                     }
                     case FOURTH_PATTERN_MATCH -> {
-
-                        String[] parseDate = string.split("/");
-                        resultDate = LocalDate.of(
-                            Integer.parseInt(parseDate[2]),
-                            Integer.parseInt(parseDate[0]),
-                            Integer.parseInt(parseDate[1])
-                        );
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                        resultDate = LocalDate.parse(string, formatter);
                         break;
                     }
                     case FIFTH_PATTERN_MATCH -> {
