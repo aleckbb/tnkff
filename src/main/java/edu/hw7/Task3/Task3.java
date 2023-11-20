@@ -13,7 +13,7 @@ public class Task3 {
         new Thread(() -> PersonDatabaseImpl.findByPhone("ssss")).start();
     }
 
-    public static void initDataBase(){
+    public static void initDataBase() {
         PersonDatabaseImpl hui = new PersonDatabaseImpl();
         hui.add(new Person(1, "Алексей", "бурури", "12345"));
         hui.add(new Person(2, "Александр", "буру", "22345"));
