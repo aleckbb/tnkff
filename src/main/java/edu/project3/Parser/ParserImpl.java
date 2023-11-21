@@ -17,7 +17,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Stream;
 
 @SuppressWarnings({"EmptyBlock", "MagicNumber"})
 public class ParserImpl implements Parser {
@@ -25,7 +24,7 @@ public class ParserImpl implements Parser {
     public static final String FILE_FOR_DOWNLOAD = "src/main/java/edu/project3/downloadedLogs/originalLogs.txt";
 
     @Override
-    public List<LogRecord> parse(String regOrURL) {
+    public List<LogRecord> parse(String regOrURL, OffsetDateTime fromDate, OffsetDateTime toDate) {
         try {
             var uri = URI.create(regOrURL);
             try (HttpClient client = HttpClient.newHttpClient()) {
@@ -40,7 +39,7 @@ public class ParserImpl implements Parser {
                     client.send(request, HttpResponse.BodyHandlers.ofFile(
                         Path.of(FILE_FOR_DOWNLOAD)));
 
-                return parseFile(response.body()).toList();
+                return parseFile(response.body(), fromDate, toDate);
             } catch (IOException | InterruptedException ignore) {
             }
         } catch (IllegalArgumentException ignore) {
@@ -48,24 +47,29 @@ public class ParserImpl implements Parser {
 
         Path dir = Path.of(regOrURL);
         try (var files = Files.list(dir)) {
-            return files.flatMap(ParserImpl::parseFile).toList();
+            Path logs = files.toList().getFirst();
+            return parseFile(logs, fromDate, toDate);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static Stream<LogRecord> parseFile(Path filePath) {
+    private static List<LogRecord> parseFile(Path filePath, OffsetDateTime fromDate, OffsetDateTime toDate) {
         List<LogRecord> ans = new ArrayList<>();
         try (var reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             while (reader.ready()) {
-                ans.add(parseLog(reader.readLine()));
+                LogRecord currentLogRecord = parseLog(reader.readLine());
+                if(currentLogRecord.date().isAfter(fromDate)
+                && currentLogRecord.date().isBefore(toDate)) {
+                    ans.add(currentLogRecord);
+                }
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return ans.stream();
+        return ans;
     }
 
     public static LogRecord parseLog(String line) {

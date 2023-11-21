@@ -61,22 +61,16 @@ public class Main {
             }
         }
 
+        if (fromDate == null) {
+            fromDate = OffsetDateTime.MIN;
+        }
+
+        if (toDate == null) {
+            toDate = OffsetDateTime.now();
+        }
+
         Parser parser = new ParserImpl();
-        List<LogRecord> logRecords = parser.parse(path);
-
-        if (fromDate != null) {
-            OffsetDateTime finalFromDate = fromDate;
-            logRecords = logRecords.stream()
-                .filter(x -> x.date().isAfter(finalFromDate))
-                .toList();
-        }
-
-        if (toDate != null) {
-            OffsetDateTime finalToDate = toDate;
-            logRecords = logRecords.stream()
-                .filter(x -> x.date().isBefore(finalToDate))
-                .toList();
-        }
+        List<LogRecord> logRecords = parser.parse(path, fromDate, toDate);
 
         var statsCounters = List.of(
             new AvgBodyBytes(),
@@ -90,9 +84,8 @@ public class Main {
         );
 
         Printer printer = new BridgePrinter(format);
-        List<LogRecord> finalLogRecords = logRecords;
 
         statsCounters.forEach(
-            statCounter -> logOutput(printer.print(statCounter.countStatistic(finalLogRecords))));
+            statCounter -> logOutput(printer.print(statCounter.countStatistic(logRecords))));
     }
 }

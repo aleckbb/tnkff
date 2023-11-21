@@ -59,7 +59,7 @@ class MainTest {
         ParserImpl parser = new ParserImpl();
 
         // When
-        var res = parser.parse(dir);
+        var res = parser.parse(dir, OffsetDateTime.MIN, OffsetDateTime.now());
 
         // Then
         assertEquals(testLogRecords, res);
