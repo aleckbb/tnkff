@@ -59,8 +59,8 @@ public class ParserImpl implements Parser {
         try (var reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             while (reader.ready()) {
                 LogRecord currentLogRecord = parseLog(reader.readLine());
-                if(currentLogRecord.date().isAfter(fromDate)
-                && currentLogRecord.date().isBefore(toDate)) {
+                if (currentLogRecord.date().isAfter(fromDate)
+                    && currentLogRecord.date().isBefore(toDate)) {
                     ans.add(currentLogRecord);
                 }
             }
