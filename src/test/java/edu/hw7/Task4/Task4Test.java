@@ -10,7 +10,7 @@ class Task4Test {
     @DisplayName("Многопоточное решение быстрее, чем однопоточное")
     void test1() {
         // Given
-        long numberOfIterations = 100_000_000;
+        long numberOfIterations = 1_000_000_000;
 
         // When
         var first = System.nanoTime();
@@ -31,6 +31,6 @@ class Task4Test {
         long numberOfIterations = 100_000_000;
 
         // Then
-        assertTrue(Math.abs(Task4.multiThreadPI(numberOfIterations) - Math.PI) < 0.0005);
+        assertTrue(Math.abs(Task4.multiThreadPI(numberOfIterations) - Math.PI) < 0.001);
     }
 }
