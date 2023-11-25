@@ -6,7 +6,7 @@ public class Circle {
     private static final double RADIUS = 0.5;
 
     public boolean isPointOfCircle(Point point) {
-        return Math.pow(Math.abs(point.getX()) - CENTER.getX(), 2)
-            + Math.pow(Math.abs(point.getY()) - CENTER.getY(), 2) <= Math.pow(RADIUS, 2);
+        return (point.getX() - CENTER.getX()) * (point.getX() - CENTER.getX())
+            + (point.getY() - CENTER.getY()) * (point.getY() - CENTER.getY()) <= Math.pow(RADIUS, 2);
     }
 }

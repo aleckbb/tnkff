@@ -7,15 +7,9 @@ interface PersonDatabase {
 
     void delete(int id);
 
-    static @Nullable Person findByName(String name) {
-        return null;
-    }
+    @Nullable Person findByName(String name);
 
-    static @Nullable Person findByAddress(String address) {
-        return null;
-    }
+    @Nullable Person findByAddress(String address);
 
-    static @Nullable Person findByPhone(String phone) {
-        return null;
-    }
+    @Nullable Person findByPhone(String phone);
 }

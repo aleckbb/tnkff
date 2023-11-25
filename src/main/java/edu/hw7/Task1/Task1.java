@@ -2,14 +2,13 @@ package edu.hw7.Task1;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-@SuppressWarnings("UncommentedMain")
 public class Task1 {
 
     private Task1() {
 
     }
 
-    public static void main(String[] args) {
+    public static int parallelIncrement() {
         AtomicInteger integer = new AtomicInteger(0);
         var thread1 = new Thread(integer::incrementAndGet);
         var thread2 = new Thread(integer::incrementAndGet);
@@ -33,5 +32,6 @@ public class Task1 {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        return integer.get();
     }
 }
