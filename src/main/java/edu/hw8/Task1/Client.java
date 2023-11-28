@@ -21,8 +21,8 @@ public class Client implements AutoCloseable {
     public void start(String host, int port) {
         try {
             client = new Socket(InetAddress.getByName(host), port);
-            bufferedWriter = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
-            bufferedReader = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(client.getOutputStream(), "UTF-8"));
+            bufferedReader = new BufferedReader(new InputStreamReader(client.getInputStream(), "UTF-8"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -32,6 +32,7 @@ public class Client implements AutoCloseable {
         try {
             bufferedWriter.write(message);
             bufferedWriter.flush();
+            System.out.println("Ваня: " + message);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -40,7 +41,7 @@ public class Client implements AutoCloseable {
     public void readFromServer() {
         try {
             var response = bufferedReader.readLine();
-            System.out.println("Answer: " + response);
+            System.out.println("Сервер: " + response);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
