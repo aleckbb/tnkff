@@ -45,7 +45,7 @@ public class Server implements AutoCloseable {
 
                     if (!key.isValid()) {
                         iter.remove();
-                        //blockingQueue.poll();
+                        blockingQueue.poll();
                         continue;
                     }
 
@@ -71,7 +71,7 @@ public class Server implements AutoCloseable {
     public void register(Selector selector, ServerSocketChannel serverSocket) throws IOException, InterruptedException {
         SocketChannel client = serverSocket.accept();
         if (client != null) {
-            //blockingQueue.put(client);
+            blockingQueue.put(client);
             client.configureBlocking(false);
             client.register(selector, SelectionKey.OP_READ);
         }
@@ -89,7 +89,7 @@ public class Server implements AutoCloseable {
             r = client.read(byteBuffer);
         }
         client.close();
-        //blockingQueue.remove(client);
+        blockingQueue.remove(client);
     }
 
     private ByteBuffer getAnswer(ByteBuffer byteBuffer) {
