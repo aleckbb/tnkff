@@ -2,7 +2,11 @@ package edu.hw8.Task1;
 
 import java.io.IOException;
 
+@SuppressWarnings("MagicNumber")
 public class Main {
+    private Main() {
+
+    }
 
     public static void main(String[] args) {
         Server server = new Server(4);

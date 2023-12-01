@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+@SuppressWarnings("MagicNumber")
 public class Server implements AutoCloseable {
 
     private ServerSocketChannel serverSocket;
@@ -95,8 +96,8 @@ public class Server implements AutoCloseable {
     private ByteBuffer getAnswer(ByteBuffer byteBuffer) {
         String currentData = UTF_8.decode(byteBuffer).toString();
         String answer = "Error\n";
-        if (Quotes.quotes.containsKey(currentData)) {
-            answer = Quotes.quotes.get(currentData) + '\n';
+        if (Quotes.QUOTES.containsKey(currentData)) {
+            answer = Quotes.QUOTES.get(currentData) + '\n';
         }
         return ByteBuffer.wrap(answer.getBytes(UTF_8));
     }

@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
+@SuppressWarnings({"MultipleStringLiterals", "RegexpSinglelineJava"})
 public class Client implements AutoCloseable {
 
     private Socket client;
