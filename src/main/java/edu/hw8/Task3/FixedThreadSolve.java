@@ -17,6 +17,7 @@ public class FixedThreadSolve {
         Path path = Path.of("src/main/java/edu/hw8/Task3/Database/database.txt");
         ReadDatabase.readInMap(path);
         ExecutorService threads = Executors.newFixedThreadPool(6);
+        var start = System.nanoTime();
         Future<?> future = threads.submit(() -> {
             String password = passwordGenerator.nextPassword();
             while (Maps.passwordsFromDatabase.size() > 0) {
@@ -28,7 +29,8 @@ public class FixedThreadSolve {
             }
         });
         future.get();
+        var end = System.nanoTime() - start;
         threads.shutdown();
-        System.out.println(Maps.passwordsOfClients.toString());
+        System.out.println(end);
     }
 }
