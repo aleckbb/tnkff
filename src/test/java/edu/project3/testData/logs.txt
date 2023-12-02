@@ -1,0 +1,2 @@
+37.26.93.214 - - [17/May/2015:08:05:52 +0000] "GET /downloads/product_2 HTTP/1.1" 200 3318 "-" "Go 1.1 package http"
+23.23.226.37 - - [17/May/2015:08:05:19 +0000] "GET /downloads/product_2 HTTP/1.1" 200 2578 "-" "urlgrabber/3.9.1 yum/3.4.3"
