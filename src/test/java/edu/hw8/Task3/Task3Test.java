@@ -3,10 +3,11 @@ package edu.hw8.Task3;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,14 +38,16 @@ public class Task3Test {
     void test2() {
         // given
         int expected = 3906;
-        PasswordGenerator passwordGenerator = new PasswordGenerator(2);
+        List<String> allPasswordsTwoSign = new ArrayList<>();
 
         // when
-        List<String> allPasswordsTwoSign = new ArrayList<>();
-        String password = passwordGenerator.nextPassword();
-        while (password != "") {
-            allPasswordsTwoSign.add(password);
-            password = passwordGenerator.nextPassword();
+        for (int i = 1; i < 3; i++) {
+            PasswordGenerator passwordGenerator = new PasswordGenerator(i);
+            String password = passwordGenerator.nextPassword();
+            while (!password.isEmpty()) {
+                allPasswordsTwoSign.add(password);
+                password = passwordGenerator.nextPassword();
+            }
         }
 
         // then
@@ -59,7 +62,6 @@ public class Task3Test {
         // given
         String s = "1234";
         String expected = "81dc9bdb52d04dc20036dbd8313ed055";
-        PasswordGenerator passwordGenerator = new PasswordGenerator(2);
 
         // then
         assertEquals(expected, HashGenerator.getMD5Hash(s));
@@ -70,22 +72,26 @@ public class Task3Test {
     void test4() throws ExecutionException, InterruptedException {
         // given
         String expected = "{a.v.petrov=1z, v.v.belov=z1, a.s.ivanov=00, k.p.maslov=1}";
-        PasswordGenerator passwordGenerator = new PasswordGenerator(2);
 
         // then
         ReadDatabase.readInMap(path);
-        ExecutorService threads = Executors.newFixedThreadPool(6);
-        Future<?> future = threads.submit(() -> {
-            String password = passwordGenerator.nextPassword();
-            while (Maps.passwordsFromDatabase.size() > 0) {
-                String hash = HashGenerator.getMD5Hash(password);
-                if (Maps.passwordsFromDatabase.containsKey(hash)) {
-                    Maps.passwordsOfClients.put(Maps.passwordsFromDatabase.remove(hash), password);
+        ExecutorService threads = Executors.newFixedThreadPool(2);
+        var tasks = IntStream.range(1, 3)
+            .mapToObj(passwordLength -> CompletableFuture.runAsync(() -> {
+                PasswordGenerator passwordGenerator = new PasswordGenerator(passwordLength);
+                String password = passwordGenerator.nextPassword();
+                while (!Maps.passwordsFromDatabase.isEmpty() && !password.isEmpty()) {
+                    String hash = HashGenerator.getMD5Hash(password);
+                    if (Maps.passwordsFromDatabase.containsKey(hash)) {
+                        Maps.passwordsOfClients.put(Maps.passwordsFromDatabase.remove(hash), password);
+                    }
+                    password = passwordGenerator.nextPassword();
                 }
-                password = passwordGenerator.nextPassword();
-            }
-        });
-        future.get();
+            }, threads))
+            .limit(2)
+            .toArray(CompletableFuture[]::new);
+
+        CompletableFuture.allOf(tasks).join();
         threads.shutdown();
 
         // then
@@ -97,17 +103,19 @@ public class Task3Test {
     void test5() {
         // given
         String expected = "{a.v.petrov=1z, v.v.belov=z1, a.s.ivanov=00, k.p.maslov=1}";
-        PasswordGenerator passwordGenerator = new PasswordGenerator(2);
 
         // then
         ReadDatabase.readInMap(path);
-        String password = passwordGenerator.nextPassword();
-        while (Maps.passwordsFromDatabase.size() > 0) {
-            String hash = HashGenerator.getMD5Hash(password);
-            if (Maps.passwordsFromDatabase.containsKey(hash)) {
-                Maps.passwordsOfClients.put(Maps.passwordsFromDatabase.remove(hash), password);
+        for (int i = 1; i < 3; i++) {
+            PasswordGenerator passwordGenerator = new PasswordGenerator(i);
+            String password = passwordGenerator.nextPassword();
+            while (!Maps.passwordsFromDatabase.isEmpty() && !password.isEmpty()) {
+                String hash = HashGenerator.getMD5Hash(password);
+                if (Maps.passwordsFromDatabase.containsKey(hash)) {
+                    Maps.passwordsOfClients.put(Maps.passwordsFromDatabase.remove(hash), password);
+                }
+                password = passwordGenerator.nextPassword();
             }
-            password = passwordGenerator.nextPassword();
         }
 
         // then

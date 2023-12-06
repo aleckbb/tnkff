@@ -1,6 +1,7 @@
 package edu.hw8.Task3;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SuppressWarnings("MagicNumber")
@@ -8,16 +9,17 @@ public class PasswordGenerator {
 
     private List<Character> allSignOfPassword = new ArrayList<>();
 
-    private final int maxPasswordLength;
+    private final int passwordLength;
 
-    private volatile Character[] currentPassword;
+    private char[] currentPassword;
 
-    private volatile int shift;
+    private boolean isAllZero;
 
-    public PasswordGenerator(int maxPasswordLength) {
-        shift = maxPasswordLength - 1;
-        this.maxPasswordLength = maxPasswordLength;
-        currentPassword = new Character[maxPasswordLength];
+    public PasswordGenerator(int passwordLength) {
+        isAllZero = true;
+        this.passwordLength = passwordLength;
+        currentPassword = new char[passwordLength];
+        Arrays.fill(currentPassword, '0');
         setUp();
     }
 
@@ -33,25 +35,24 @@ public class PasswordGenerator {
         }
     }
 
-    public synchronized String nextPassword() {
-        StringBuilder nextPassword = new StringBuilder();
-        int indexOfPassword = maxPasswordLength - 1;
-        if (currentPassword[indexOfPassword] == null) {
-            currentPassword[indexOfPassword] = '0';
-            return String.valueOf(currentPassword[indexOfPassword]);
+    public String nextPassword() {
+        int indexOfPassword = passwordLength - 1;
+
+        for (int i = 0; i < passwordLength && isAllZero; ++i) {
+            if (currentPassword[i] != '0') {
+                isAllZero = false;
+            }
+        }
+        if (isAllZero) {
+            isAllZero = false;
+            return String.valueOf(currentPassword);
         }
         while (indexOfPassword != -1) {
             if (currentPassword[indexOfPassword] < allSignOfPassword.getLast()) {
                 currentPassword[indexOfPassword] =
                     allSignOfPassword.get(allSignOfPassword.indexOf(currentPassword[indexOfPassword]) + 1);
-                return createPassword(nextPassword, shift);
+                return String.valueOf(currentPassword);
             } else {
-                if (indexOfPassword - 1 != -1 && currentPassword[indexOfPassword - 1] == null) {
-                    currentPassword[indexOfPassword - 1] = '0';
-                    prepareNextPassword(indexOfPassword);
-                    --shift;
-                    return createPassword(nextPassword, shift);
-                }
                 prepareNextPassword(indexOfPassword);
                 indexOfPassword--;
             }
@@ -59,15 +60,8 @@ public class PasswordGenerator {
         return "";
     }
 
-    private synchronized String createPassword(StringBuilder nextPassword, int index) {
-        for (int i = index; i < maxPasswordLength; ++i) {
-            nextPassword.append(currentPassword[i]);
-        }
-        return nextPassword.toString();
-    }
-
-    private synchronized void prepareNextPassword(int start) {
-        for (int i = start; i < maxPasswordLength; ++i) {
+    private void prepareNextPassword(int start) {
+        for (int i = start; i < passwordLength; ++i) {
             currentPassword[i] = '0';
         }
     }
