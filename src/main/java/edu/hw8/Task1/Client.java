@@ -50,8 +50,8 @@ public class Client implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        client.close();
         bufferedWriter.close();
         bufferedReader.close();
+        client.close();
     }
 }
