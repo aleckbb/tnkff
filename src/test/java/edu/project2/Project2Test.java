@@ -1,6 +1,8 @@
 package edu.project2;
 
 import java.util.List;
+import java.util.Stack;
+import java.util.concurrent.ForkJoinPool;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -251,6 +253,37 @@ class Project2Test {
 
         // Then
         assertEquals(0, path.size());
+    }
+
+    @Test
+    @DisplayName("Проверка, что оба способа решения выводят один результат")
+    void test14() {
+        // given
+        Maze maze = getMaze();
+        RendererMaze rendererMaze = new RendererMaze();
+        SolverByBFS solverByBFS = new SolverByBFS();
+        Coordinate start = new Coordinate(0, 0);
+        Coordinate end = new Coordinate(3, 3);
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        MultiThreadSolverByBFS multiThreadSolverByBFS = new MultiThreadSolverByBFS(new Stack<>(), maze, start, end);
+
+        // when
+        resetVisited(maze);
+        List<Cell> pathByBFS = solverByBFS.solve(maze, start, end);
+        resetVisited(maze);
+        List<Cell> pathMultiThreadSolverByBFS = forkJoinPool.invoke(multiThreadSolverByBFS);
+
+        // then
+        assertEquals(rendererMaze.render(maze, pathByBFS), rendererMaze.render(maze, pathMultiThreadSolverByBFS));
+        forkJoinPool.close();
+    }
+
+    private void resetVisited(Maze maze) {
+        for (int x = 0; x < maze.getHeight(); ++x) {
+            for (int y = 0; y < maze.getWidth(); ++y) {
+                maze.getGrid()[x][y].setVisited(false);
+            }
+        }
     }
 
     @NotNull private static Maze getMaze() {
