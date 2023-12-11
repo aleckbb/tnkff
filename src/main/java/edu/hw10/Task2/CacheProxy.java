@@ -52,6 +52,7 @@ public class CacheProxy implements InvocationHandler {
         return result;
     }
 
+    @SuppressWarnings("MagicNumber")
     public static String getMD5Hash(String result) {
         MessageDigest messageDigest;
         byte[] digest;
