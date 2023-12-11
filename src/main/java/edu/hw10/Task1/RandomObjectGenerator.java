@@ -25,10 +25,6 @@ public class RandomObjectGenerator {
 
     public Object nextObject(Class<?> className, String methodName)
         throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        // ClassLoader objectClassLoader = object.getClass().getClassLoader();
-        // Class[] interfaces = object.getClass().getInterfaces();
-        // Object proxyObject =
-        //    Proxy.newProxyInstance(objectClassLoader, interfaces, new ForFabricMethodInvocationHandler(object));
         Method method = null;
         Method[] methods = className.getMethods();
         for (var md : methods) {
