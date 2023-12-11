@@ -1,19 +1,22 @@
 package edu.hw10.Task2;
 
-import edu.hw10.Task2.Fact.FactCalculator;
-import edu.hw10.Task2.Fact.FactCalculatorImp;
+import edu.hw10.Task2.Fact.Palindrome;
+import edu.hw10.Task2.Fact.PalindromeImp;
 import edu.hw10.Task2.Fib.FibCalculator;
 import edu.hw10.Task2.Fib.FibCalculatorImp;
+import java.util.Arrays;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Task2Test {
 
     @Test
-    @DisplayName("Прокси хэширует возвращаемое значение метода fib")
+    @DisplayName("Кеширующий прокси работает для fib")
     void test1() {
         // given
         FibCalculator fib = new FibCalculatorImp();
@@ -21,30 +24,72 @@ public class Task2Test {
 
         // when
         long result = proxyFib.fib(5);
-        Map<String, String> hashReturnsValuesOfMethods = CacheProxy.getHashReturnsValuesOfMethods();
+        Map<String, Object[]> cache = CacheProxy.getCache();
 
         // then
         assertEquals(5, result);
-        assertNotNull(hashReturnsValuesOfMethods);
-        assertEquals("[e4da3b7fbbce2345d7772b0674a318d5]", hashReturnsValuesOfMethods.keySet().toString());
-        assertEquals("fib", hashReturnsValuesOfMethods.get("e4da3b7fbbce2345d7772b0674a318d5"));
+        assertNotNull(cache);
+        assertEquals("[[5]]", Arrays.toString(cache.keySet().toArray()));
+        assertEquals("[5, fib]", Arrays.toString(cache.get(Arrays.toString(new Object[] {5}))));
     }
 
     @Test
-    @DisplayName("Прокси хэширует возвращаемое значение метода fact")
+    @DisplayName("Кеширующий прокси работает для isPalindrome")
     void test2() {
         // given
-        FactCalculator fib = new FactCalculatorImp();
-        FactCalculator proxyFib = (FactCalculator) CacheProxy.create(fib, fib.getClass());
+        Palindrome palindrome = new PalindromeImp();
+        Palindrome proxyPalindrome = (Palindrome) CacheProxy.create(palindrome, palindrome.getClass());
 
         // when
-        long result = proxyFib.fact(5);
-        Map<String, String> hashReturnsValuesOfMethods = CacheProxy.getHashReturnsValuesOfMethods();
+        boolean result1 = proxyPalindrome.isPalindrome("12321");
+        boolean result2 = proxyPalindrome.isPalindrome("12345");
+        Map<String, Object[]> cache = CacheProxy.getCache();
 
         // then
-        assertEquals(120, result);
-        assertNotNull(hashReturnsValuesOfMethods);
-        assertEquals("[da4fb5c6e93e74d3df8527599fa62642]", hashReturnsValuesOfMethods.keySet().toString());
-        assertEquals("fact", hashReturnsValuesOfMethods.get("da4fb5c6e93e74d3df8527599fa62642"));
+        assertTrue(result1);
+        assertFalse(result2);
+        assertNotNull(cache);
+        assertEquals("[[12345], [12321]]", Arrays.toString(cache.keySet().toArray()));
+        assertEquals("[true, isPalindrome]", Arrays.toString(cache.get(Arrays.toString(new Object[] {"12321"}))));
+    }
+
+    @Test
+    @DisplayName("Сохраняются только уникальные значения")
+    void test3() {
+        // given
+        FibCalculator fib = new FibCalculatorImp();
+        FibCalculator proxyFib = (FibCalculator) CacheProxy.create(fib, fib.getClass());
+
+        // when
+        proxyFib.fib(5);
+        proxyFib.fib(5);
+        proxyFib.fib(5);
+        proxyFib.fib(5);
+        proxyFib.fib(5);
+        Map<String, Object[]> cache = CacheProxy.getCache();
+
+        // then
+        assertNotNull(cache);
+        assertEquals(1, cache.size());
+    }
+
+    @Test
+    @DisplayName("Сохраняются только уникальные значения")
+    void test4() {
+        // given
+        FibCalculator fib = new FibCalculatorImp();
+        FibCalculator proxyFib = (FibCalculator) CacheProxy.create(fib, fib.getClass());
+
+        // when
+        proxyFib.fib(5);
+        proxyFib.fib(1);
+        proxyFib.fib(2);
+        proxyFib.fib(3);
+        proxyFib.fib(4);
+        Map<String, Object[]> cache = CacheProxy.getCache();
+
+        // then
+        assertNotNull(cache);
+        assertEquals(5, cache.size());
     }
 }
