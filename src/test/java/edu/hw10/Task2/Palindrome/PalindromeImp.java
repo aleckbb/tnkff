@@ -1,4 +1,4 @@
-package edu.hw10.Task2.Fact;
+package edu.hw10.Task2.Palindrome;
 
 public class PalindromeImp implements Palindrome {
 

@@ -1,7 +1,7 @@
 package edu.hw10.Task2;
 
-import edu.hw10.Task2.Fact.Palindrome;
-import edu.hw10.Task2.Fact.PalindromeImp;
+import edu.hw10.Task2.Palindrome.Palindrome;
+import edu.hw10.Task2.Palindrome.PalindromeImp;
 import edu.hw10.Task2.Fib.FibCalculator;
 import edu.hw10.Task2.Fib.FibCalculatorImp;
 import java.util.Arrays;
