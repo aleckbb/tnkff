@@ -189,7 +189,7 @@
                     </executions>
                     <configuration>
                         <excludes>
-                            <exclude>ArithmeticUtils</exclude>
+                            <exclude>*ArithmeticUtils*</exclude>
                         </excludes>
                     </configuration>
                 </plugin>
